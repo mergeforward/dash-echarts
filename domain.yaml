@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.allow-http: "true"
+    kubernetes.io/ingress.class: tesla-cn
+  generation: 3
+  name: govreg-service-ingress
+  namespace: govreg-prod
+  resourceVersion: "67069066"
+spec:
+  rules:
+  - host: govreg.tesla.cn
+    http:
+      paths:
+      - backend:
+          serviceName: govreg-service
+          servicePort: 8000
+        path: /

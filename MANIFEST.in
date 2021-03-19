@@ -1,0 +1,7 @@
+include dash_echarts/dash_echarts.min.js
+include dash_echarts/dash_echarts.min.js.map
+include dash_echarts/metadata.json
+include dash_echarts/package-info.json
+include README.md
+include LICENSE
+include package.json

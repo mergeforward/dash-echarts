@@ -14,7 +14,59 @@ app.layout = html.Div([
         id='echarts',
     ),
     ...
-])
-```
+]) ```
 
-you can define option in python
+then you can modify option in python
+
+## full example
+```python
+import dash_echarts
+import dash, random
+from dash.dependencies import Input, Output
+import dash_html_components as html
+import dash_core_components as dcc
+from dash.exceptions import PreventUpdate
+
+def gen_randlist(num):
+    return random.sample(range(num), 7)
+
+app = dash.Dash(__name__)
+
+option =  {
+    'xAxis': {
+        'type': 'category',
+        'data': ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+    },
+    'yAxis': {
+        'type': 'value'
+    },
+    'series': [{
+        'data': gen_randlist(2000),
+        'type': 'bar',
+    }]
+}
+
+app.layout = html.Div([
+    dash_echarts.DashECharts(
+        option = option,
+        id='echarts',
+    ),
+    dcc.Interval(id="interval", interval=1 * 1000, n_intervals=0),
+    html.Div(id="hidden_div", style={"display":"none"})
+
+])
+
+
+@app.callback(
+    Output('echarts', 'option'),
+    [Input('interval', 'n_intervals')])
+def update(n_intervals):
+    if n_intervals == 0:
+        raise PreventUpdate
+    else:
+        option['series'][0]['data'] = gen_randlist(2000)
+    return option
+
+if __name__ == '__main__':
+    app.run_server(debug=True)
+```

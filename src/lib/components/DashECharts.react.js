@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 import ReactECharts from 'echarts-for-react';
 import {pick, clone, last} from 'ramda';
 
-
 function DashECharts(props)  {
     const {
         n_clicks, n_clicks_timestamp, 
         n_clicks_data, selected_data, brush_data, 
-        option, not_merge, lazy_update, theme,
+        events, option, 
+        not_merge, lazy_update, theme,
+        style, opts,
         id, setProps
     } = props;
     
@@ -43,24 +44,27 @@ function DashECharts(props)  {
             ], e)
         });
     }
-
-    const eventsDict = {
-        'click': clickHandler,
-        'selectchanged': selectChangedHandler,
-        'brushEnd': brushEndHandler,
+    
+    function eventsHandlers(events) {
+        let eventsDict = {
+            'click': clickHandler,
+            'selectchanged': selectChangedHandler,
+            'brushEnd': brushEndHandler,
+        }
+        return pick(events, eventsDict)
     }
     return (
+        <ReactECharts
+            id={id}
+            option={option}
+            notMerge={not_merge}
+            lazyUpdate={lazy_update}
+            theme={theme}
+            onEvents={eventsHandlers(events)}
+            style={style}
+            opts={opts}
 
-        <div id={id}>
-            <h1>Dash Echarts Integration Demo</h1>
-            <ReactECharts
-                option={option}
-                notMerge={not_merge}
-                lazyUpdate={lazy_update}
-                theme={theme}
-                onEvents={eventsDict}
-            />
-        </div>
+        />
     );
 }
 
@@ -71,6 +75,9 @@ DashECharts.defaultProps = {
     n_clicks_data: {},
     selected_data: {},
     brush_data: {},
+    events: [],
+    style: {},
+    opts: {},
 };
 
 DashECharts.propTypes = {
@@ -83,17 +90,19 @@ DashECharts.propTypes = {
     notMerge: PropTypes.bool,
     lazyUpdate: PropTypes.bool,
     theme: PropTypes.string,
+    events: PropTypes.array,
+    style: PropTypes.object,
+    opts: PropTypes.object,
     /**
      * The ID used to identify this component in Dash callbacks.
      */
     id: PropTypes.string,
-
-
     /**
      * Dash-assigned callback that should be called to report property changes
      * to Dash, to make them available for callbacks.
      */
     setProps: PropTypes.func
 };
+
 
 export default DashECharts;

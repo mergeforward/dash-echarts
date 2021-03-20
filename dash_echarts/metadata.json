@@ -91,6 +91,39 @@
           "computed": false
         }
       },
+      "events": {
+        "type": {
+          "name": "array"
+        },
+        "required": false,
+        "description": "",
+        "defaultValue": {
+          "value": "[]",
+          "computed": false
+        }
+      },
+      "style": {
+        "type": {
+          "name": "object"
+        },
+        "required": false,
+        "description": "",
+        "defaultValue": {
+          "value": "{}",
+          "computed": false
+        }
+      },
+      "opts": {
+        "type": {
+          "name": "object"
+        },
+        "required": false,
+        "description": "",
+        "defaultValue": {
+          "value": "{}",
+          "computed": false
+        }
+      },
       "id": {
         "type": {
           "name": "string"

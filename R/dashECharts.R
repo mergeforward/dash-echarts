@@ -1,8 +1,8 @@
 # AUTO GENERATED FILE - DO NOT EDIT
 
-dashECharts <- function(n_clicks=NULL, n_clicks_timestamp=NULL, n_clicks_data=NULL, selected_data=NULL, brush_data=NULL, option=NULL, notMerge=NULL, lazyUpdate=NULL, theme=NULL, id=NULL) {
+dashECharts <- function(n_clicks=NULL, n_clicks_timestamp=NULL, n_clicks_data=NULL, selected_data=NULL, brush_data=NULL, option=NULL, notMerge=NULL, lazyUpdate=NULL, theme=NULL, events=NULL, style=NULL, opts=NULL, id=NULL) {
     
-    props <- list(n_clicks=n_clicks, n_clicks_timestamp=n_clicks_timestamp, n_clicks_data=n_clicks_data, selected_data=selected_data, brush_data=brush_data, option=option, notMerge=notMerge, lazyUpdate=lazyUpdate, theme=theme, id=id)
+    props <- list(n_clicks=n_clicks, n_clicks_timestamp=n_clicks_timestamp, n_clicks_data=n_clicks_data, selected_data=selected_data, brush_data=brush_data, option=option, notMerge=notMerge, lazyUpdate=lazyUpdate, theme=theme, events=events, style=style, opts=opts, id=id)
     if (length(props) > 0) {
         props <- props[!vapply(props, is.null, logical(1))]
     }
@@ -10,7 +10,7 @@ dashECharts <- function(n_clicks=NULL, n_clicks_timestamp=NULL, n_clicks_data=NU
         props = props,
         type = 'DashECharts',
         namespace = 'dash_echarts',
-        propNames = c('n_clicks', 'n_clicks_timestamp', 'n_clicks_data', 'selected_data', 'brush_data', 'option', 'notMerge', 'lazyUpdate', 'theme', 'id'),
+        propNames = c('n_clicks', 'n_clicks_timestamp', 'n_clicks_data', 'selected_data', 'brush_data', 'option', 'notMerge', 'lazyUpdate', 'theme', 'events', 'style', 'opts', 'id'),
         package = 'dashEcharts'
         )
 

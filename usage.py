@@ -19,19 +19,28 @@ option =  {
         'type': 'value'
     },
     'series': [{
-        'data': gen_randlist(2000),
-        'type': 'bar',
+        'data': gen_randlist(200),
+        'type': 'line',
+        'smooth': True
+    }, {
+        'data': gen_randlist(200),
+        'type': 'line',
+        'smooth': True
     }]
-}
+} 
+events = []
 
 app.layout = html.Div([
     dash_echarts.DashECharts(
         option = option,
+        events = events,
         id='echarts',
+        style={
+            "width": '100vw',
+            "height": '100vh',
+        }
     ),
     dcc.Interval(id="interval", interval=1 * 1000, n_intervals=0),
-    html.Div(id="hidden_div", style={"display":"none"})
-
 ])
 
 
@@ -42,7 +51,8 @@ def update(n_intervals):
     if n_intervals == 0:
         raise PreventUpdate
     else:
-        option['series'][0]['data'] = gen_randlist(2000)
+        option['series'][0]['data'] = gen_randlist(200)
+        option['series'][1]['data'] = gen_randlist(200)
     return option
 
 if __name__ == '__main__':

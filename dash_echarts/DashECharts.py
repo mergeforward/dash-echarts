@@ -17,14 +17,17 @@ Keyword arguments:
 - notMerge (boolean; optional)
 - lazyUpdate (boolean; optional)
 - theme (string; default 'vintage')
+- events (list; optional)
+- style (dict; optional)
+- opts (dict; optional)
 - id (string; optional): The ID used to identify this component in Dash callbacks."""
     @_explicitize_args
-    def __init__(self, n_clicks=Component.UNDEFINED, n_clicks_timestamp=Component.UNDEFINED, n_clicks_data=Component.UNDEFINED, selected_data=Component.UNDEFINED, brush_data=Component.UNDEFINED, option=Component.UNDEFINED, notMerge=Component.UNDEFINED, lazyUpdate=Component.UNDEFINED, theme=Component.UNDEFINED, id=Component.UNDEFINED, **kwargs):
-        self._prop_names = ['n_clicks', 'n_clicks_timestamp', 'n_clicks_data', 'selected_data', 'brush_data', 'option', 'notMerge', 'lazyUpdate', 'theme', 'id']
+    def __init__(self, n_clicks=Component.UNDEFINED, n_clicks_timestamp=Component.UNDEFINED, n_clicks_data=Component.UNDEFINED, selected_data=Component.UNDEFINED, brush_data=Component.UNDEFINED, option=Component.UNDEFINED, notMerge=Component.UNDEFINED, lazyUpdate=Component.UNDEFINED, theme=Component.UNDEFINED, events=Component.UNDEFINED, style=Component.UNDEFINED, opts=Component.UNDEFINED, id=Component.UNDEFINED, **kwargs):
+        self._prop_names = ['n_clicks', 'n_clicks_timestamp', 'n_clicks_data', 'selected_data', 'brush_data', 'option', 'notMerge', 'lazyUpdate', 'theme', 'events', 'style', 'opts', 'id']
         self._type = 'DashECharts'
         self._namespace = 'dash_echarts'
         self._valid_wildcard_attributes =            []
-        self.available_properties = ['n_clicks', 'n_clicks_timestamp', 'n_clicks_data', 'selected_data', 'brush_data', 'option', 'notMerge', 'lazyUpdate', 'theme', 'id']
+        self.available_properties = ['n_clicks', 'n_clicks_timestamp', 'n_clicks_data', 'selected_data', 'brush_data', 'option', 'notMerge', 'lazyUpdate', 'theme', 'events', 'style', 'opts', 'id']
         self.available_wildcard_properties =            []
 
         _explicit_args = kwargs.pop('_explicit_args')

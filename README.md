@@ -31,6 +31,8 @@ run other commands
 echarts_map
 ```
 
+![](dash_echarts_map.gif)
+
 ## how to install
 
 ```bash

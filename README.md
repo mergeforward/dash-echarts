@@ -29,19 +29,8 @@ http://127.0.0.1:8050/
 pip install dash_echarts
 ```
 
-## how to use
-```python
-app.layout = html.Div([
-    dash_echarts.DashECharts(
-        option = option,
-        id='echarts',
-    ),
-    ...
-]) ```
-
-then you can modify option in python
-
 ## full example
+
 ```python
 import dash_echarts
 import dash, random

@@ -1,7 +1,8 @@
 import React, {Component,useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import ReactECharts from 'echarts-for-react';
-import {pick, clone, last} from 'ramda';
+import {registerMap, getMap} from "echarts";
+import {pick, clone, last, forEachObjIndexed} from 'ramda';
 
 function DashECharts(props)  {
     const {
@@ -9,11 +10,11 @@ function DashECharts(props)  {
         n_clicks_data, selected_data, brush_data, 
         events, option, 
         not_merge, lazy_update, theme,
-        style, opts,
+        style, opts, 
+        maps,
         id, setProps
     } = props;
-    
-    
+
     function clickHandler(e) {
         setProps({
             n_clicks: n_clicks + 1,
@@ -25,8 +26,9 @@ function DashECharts(props)  {
                 'dataIndex', 'data', 'dataType',
                 'value', 'color',
                 ], e)
-          });
+            });
     }
+
     function selectChangedHandler(e) {
         setProps({
             selected_data: pick([
@@ -34,9 +36,9 @@ function DashECharts(props)  {
                 'fromAction', 'fromActionPayload', 'isFromClick',
                 'selected', 'type'
                 ], e)
-          });
+            });
     }
-    
+
     function brushEndHandler(e) {
         setProps({
             brush_data: pick([
@@ -44,7 +46,7 @@ function DashECharts(props)  {
             ], e)
         });
     }
-    
+
     function eventsHandlers(events) {
         let eventsDict = {
             'click': clickHandler,
@@ -53,6 +55,13 @@ function DashECharts(props)  {
         }
         return pick(events, eventsDict)
     }
+
+    const registerMapForEach = (value, key) => registerMap(key, value);
+
+    useEffect(() => {
+        forEachObjIndexed(registerMapForEach, maps);
+    }, []);
+
     return (
         <ReactECharts
             id={id}
@@ -63,7 +72,6 @@ function DashECharts(props)  {
             onEvents={eventsHandlers(events)}
             style={style}
             opts={opts}
-
         />
     );
 }
@@ -78,6 +86,7 @@ DashECharts.defaultProps = {
     events: [],
     style: {},
     opts: {},
+    maps: {},
 };
 
 DashECharts.propTypes = {
@@ -93,6 +102,7 @@ DashECharts.propTypes = {
     events: PropTypes.array,
     style: PropTypes.object,
     opts: PropTypes.object,
+    maps: PropTypes.object,
     /**
      * The ID used to identify this component in Dash callbacks.
      */

@@ -27,7 +27,8 @@ setup(
     ],    
     entry_points={
         'console_scripts': [
-            'echarts_line=dash_echarts.examples.line:main'
+            'echarts_line=dash_echarts.examples.line:main',
+            'echarts_map=dash_echarts.examples.map:main',
         ]
     },
 )

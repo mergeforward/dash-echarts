@@ -1,6 +1,6 @@
 {
   "name": "dash_echarts",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "description": "echarts for dash",
   "repository": {
     "type": "git",

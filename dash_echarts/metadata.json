@@ -124,6 +124,17 @@
           "computed": false
         }
       },
+      "maps": {
+        "type": {
+          "name": "object"
+        },
+        "required": false,
+        "description": "",
+        "defaultValue": {
+          "value": "{}",
+          "computed": false
+        }
+      },
       "id": {
         "type": {
           "name": "string"

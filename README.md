@@ -23,11 +23,24 @@ http://127.0.0.1:8050/
 
 ![](dash_echarts_line.gif)
 
+step 4. explore others
+
+run other commands
+
+```
+echarts_map
+```
+
 ## how to install
 
 ```bash
 pip install dash_echarts
 ```
+
+## release notes
+
+- 0.0.4 add map demo
+- 0.0.3 first mvp
 
 ## full example
 

@@ -13,7 +13,7 @@
 dashECharts(n_clicks=NULL, n_clicks_timestamp=NULL, n_clicks_data=NULL,
 selected_data=NULL, brush_data=NULL, option=NULL,
 notMerge=NULL, lazyUpdate=NULL, theme=NULL, events=NULL,
-style=NULL, opts=NULL, id=NULL)
+style=NULL, opts=NULL, maps=NULL, id=NULL)
 }
 
 \arguments{
@@ -40,6 +40,8 @@ style=NULL, opts=NULL, id=NULL)
 \item{style}{Named list. }
 
 \item{opts}{Named list. }
+
+\item{maps}{Named list. }
 
 \item{id}{Character. The ID used to identify this component in Dash callbacks.}
 }

@@ -12,7 +12,7 @@ pip install 'dash_echarts[play]'
 step 2. run command
 
 ```
-echarts_play
+echarts_line
 ```
 
 step 3. access url

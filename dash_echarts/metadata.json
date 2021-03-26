@@ -135,6 +135,17 @@
           "computed": false
         }
       },
+      "fun_formatter": {
+        "type": {
+          "name": "bool"
+        },
+        "required": false,
+        "description": "",
+        "defaultValue": {
+          "value": "false",
+          "computed": false
+        }
+      },
       "id": {
         "type": {
           "name": "string"

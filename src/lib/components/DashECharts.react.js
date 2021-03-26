@@ -3,7 +3,20 @@ import PropTypes from 'prop-types';
 import ReactECharts from 'echarts-for-react';
 import {registerMap, getMap} from "echarts";
 import {pick, clone, last, forEachObjIndexed} from 'ramda';
+import 'echarts-gl';
 
+const funFormatter = (obj) => {
+    Object.keys(obj).forEach(key => {
+
+        if (key === 'formatter' && typeof obj[key] === 'string') { 
+            obj[key] = Function('p', obj[key].slice(5, -1))
+        }
+        else if (typeof obj[key] === 'object') {
+                funFormatter(obj[key])
+            }
+        }
+  )
+}
 function DashECharts(props)  {
     const {
         n_clicks, n_clicks_timestamp, 
@@ -12,6 +25,7 @@ function DashECharts(props)  {
         not_merge, lazy_update, theme,
         style, opts, 
         maps,
+        fun_formatter,
         id, setProps
     } = props;
 
@@ -62,6 +76,7 @@ function DashECharts(props)  {
         forEachObjIndexed(registerMapForEach, maps);
     }, []);
 
+    if (fun_formatter) funFormatter(option);
     return (
         <ReactECharts
             id={id}
@@ -87,6 +102,7 @@ DashECharts.defaultProps = {
     style: {},
     opts: {},
     maps: {},
+    fun_formatter: false,
 };
 
 DashECharts.propTypes = {
@@ -103,6 +119,7 @@ DashECharts.propTypes = {
     style: PropTypes.object,
     opts: PropTypes.object,
     maps: PropTypes.object,
+    fun_formatter: PropTypes.bool, 
     /**
      * The ID used to identify this component in Dash callbacks.
      */

@@ -28,6 +28,9 @@ setup(
     entry_points={
         'console_scripts': [
             'echarts_line=dash_echarts.examples.line:main',
+            'echarts_bar=dash_echarts.examples.bar:main',
+            'echarts_heat=dash_echarts.examples.heat:main',
+            'echarts_scatter3d=dash_echarts.examples.scatter3d:main',
             'echarts_map=dash_echarts.examples.map:main',
         ]
     },

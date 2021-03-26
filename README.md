@@ -28,10 +28,19 @@ step 4. explore others
 run other commands
 
 ```
+echarts_bar
+echarts_heat
 echarts_map
+echarts_scatter3d
 ```
 
+![](dash_echarts_bar.gif)
+
 ![](dash_echarts_map.gif)
+
+![](dash_echarts_heat.gif)
+
+![](dash_echarts_scatter3d.gif)
 
 ## how to install
 
@@ -41,6 +50,7 @@ pip install dash_echarts
 
 ## release notes
 
+- 0.0.5 add fun_fomatter(testing) feature & gl support & more examples
 - 0.0.4 add map demo
 - 0.0.3 first mvp
 

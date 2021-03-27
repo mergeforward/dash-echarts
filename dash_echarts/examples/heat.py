@@ -15,8 +15,6 @@ def gen_data(num):
     return result
 
 
-
-
 def main():
     '''
     dash_echarts examples
@@ -73,15 +71,7 @@ def main():
             'data': gen_data(100),
             'label': {
                 'show': True,
-                'formatter': '''[FUN]
-                    if (p.value[2]<60) 
-                        return '{small|'+p.name+'}'+
-                            '\\n\\n'+
-                            '{large|'+p.value[2]+'}';
-                    return '{small|'+p.name+'}'+
-                        '\\n\\n'+
-                        p.value[2];
-                ''',
+                'formatter': 'fm',
                 'textStyle': {
                     'fontSize': '10px'
                 },
@@ -109,10 +99,24 @@ def main():
 
     app.layout = html.Div([
         dash_echarts.DashECharts(
+            funs = {
+                "fm": '''
+                function (p){ 
+                    if (p.value[2]<60) 
+                        return '{small|'+p.name+'}'+
+                            '\\n\\n'+
+                            '{large|'+p.value[2]+'}';
+                    return '{small|'+p.name+'}'+
+                        '\\n\\n'+
+                        p.value[2];
+                }
+                '''
+            },
             option = option,
             events = events,
             id='echarts',
-            fun_formatter=True,
+            fun_keys=['formatter'],
+            fun_paths={'fm': ['series', '0', 'label', 'formatter']},
             style={
                 "width": '100vw',
                 "height": '100vh',

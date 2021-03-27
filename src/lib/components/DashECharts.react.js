@@ -2,21 +2,17 @@ import React, {Component,useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import ReactECharts from 'echarts-for-react';
 import {registerMap, getMap} from "echarts";
-import {pick, clone, last, forEachObjIndexed} from 'ramda';
+import {pick, forEachObjIndexed, assocPath, isEmpty} from 'ramda';
 import 'echarts-gl';
 
-const funFormatter = (obj) => {
+const loadFuns = (obj) => {
     Object.keys(obj).forEach(key => {
-
-        if (key === 'formatter' && typeof obj[key] === 'string') { 
-            obj[key] = Function('p', obj[key].slice(5, -1))
+        if (typeof obj[key] === 'string') {
+            obj[key] = new Function("return "+obj[key].trim())();
         }
-        else if (typeof obj[key] === 'object') {
-                funFormatter(obj[key])
-            }
-        }
-  )
+    })
 }
+
 function DashECharts(props)  {
     const {
         n_clicks, n_clicks_timestamp, 
@@ -25,9 +21,12 @@ function DashECharts(props)  {
         not_merge, lazy_update, theme,
         style, opts, 
         maps,
-        fun_formatter,
+        funs, fun_keys, fun_paths,
         id, setProps
     } = props;
+
+    console.log(funs, fun_paths, fun_keys)
+    if (!isEmpty(funs)) loadFuns(funs)
 
     function clickHandler(e) {
         setProps({
@@ -76,7 +75,35 @@ function DashECharts(props)  {
         forEachObjIndexed(registerMapForEach, maps);
     }, []);
 
-    if (fun_formatter) funFormatter(option);
+    const funConverterKeys = (obj) => {
+        Object.keys(obj).forEach(key => {
+            if (typeof obj[key] === 'string') { 
+                // const funTrim = obj[key].trim()
+
+                if (fun_keys.includes(key)) {
+                    console.log('here')
+                    console.log(typeof obj[key])
+                    obj[key] = funs[obj[key]]
+                    console.log(typeof obj[key])
+                    console.log('there')
+
+                } 
+            }     
+            else if (typeof obj[key] === 'object') {
+                funConverterKeys(obj[key])
+            }
+        })
+    }
+    
+    const funConverterPaths = (obj) => {
+        for (const prop in fun_paths) {
+            assocPath(fun_paths[prop], funs[prop], obj)
+        }
+    }
+
+    if (!isEmpty(fun_keys)) funConverterKeys(option)
+    if (!isEmpty(fun_paths)) funConverterPaths(option)
+
     return (
         <ReactECharts
             id={id}
@@ -102,7 +129,9 @@ DashECharts.defaultProps = {
     style: {},
     opts: {},
     maps: {},
-    fun_formatter: false,
+    fun_keys: [],
+    fun_paths: {},
+    funs: {},
 };
 
 DashECharts.propTypes = {
@@ -119,7 +148,9 @@ DashECharts.propTypes = {
     style: PropTypes.object,
     opts: PropTypes.object,
     maps: PropTypes.object,
-    fun_formatter: PropTypes.bool, 
+    funs: PropTypes.object,
+    fun_keys: PropTypes.array,
+    fun_paths: PropTypes.object,
     /**
      * The ID used to identify this component in Dash callbacks.
      */

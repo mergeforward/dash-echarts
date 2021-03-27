@@ -50,7 +50,8 @@ pip install dash_echarts
 
 ## release notes
 
-- 0.0.5 add fun_fomatter(testing) feature & gl support & more examples
+- 0.0.6 add funs, fun_keys, fun_paths & disable fun_formatter
+- 0.0.5 add fun_formatter(testing) feature & gl support & more examples
 - 0.0.4 add map demo
 - 0.0.3 first mvp
 

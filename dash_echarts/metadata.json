@@ -135,14 +135,36 @@
           "computed": false
         }
       },
-      "fun_formatter": {
+      "funs": {
         "type": {
-          "name": "bool"
+          "name": "object"
         },
         "required": false,
         "description": "",
         "defaultValue": {
-          "value": "false",
+          "value": "{}",
+          "computed": false
+        }
+      },
+      "fun_keys": {
+        "type": {
+          "name": "array"
+        },
+        "required": false,
+        "description": "",
+        "defaultValue": {
+          "value": "[]",
+          "computed": false
+        }
+      },
+      "fun_paths": {
+        "type": {
+          "name": "object"
+        },
+        "required": false,
+        "description": "",
+        "defaultValue": {
+          "value": "{}",
           "computed": false
         }
       },

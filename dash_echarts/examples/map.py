@@ -18,13 +18,13 @@ def main():
 
     option =  {
         'title': {
-            'text': '中国底图测试',
-            'subtext': '中国底图测试',
+            'text': '中国地图测试',
+            'subtext': '中国地图测试',
             'sublink': 'localhost:8050'
         },
         'tooltip': {
             'trigger': 'item',
-            'formatter': '{b}<br/>{c} (p / km2)'
+            'formatter': '{b}<br/>{c}'
         },
         'toolbox': {
             'show': True,

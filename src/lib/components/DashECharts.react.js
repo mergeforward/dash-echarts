@@ -1,19 +1,22 @@
-import React, {Component,useState, useEffect} from 'react';
+import React, {useEffect, useRef} from 'react';
 import PropTypes from 'prop-types';
 import ReactECharts from 'echarts-for-react';
-import {registerMap, getMap} from "echarts";
-import {pick, forEachObjIndexed, assocPath, isEmpty} from 'ramda';
-import 'echarts-gl';
+import * as gl from 'echarts-gl';
+import * as echarts from 'echarts';
+import * as ramda from 'ramda';
+import * as ecStat from 'echarts-stat';
 
 const loadFuns = (obj) => {
     Object.keys(obj).forEach(key => {
-        if (typeof obj[key] === 'string') {
-            obj[key] = new Function("return "+obj[key].trim())();
+        if (typeof obj[key] === 'string' && !['chart','echarts', 'ramda', 'gl', 'ecStat'].includes(key)) {
+            let fun = new Function("return "+obj[key].trim()+".bind(this)").bind(obj)
+            obj[key] = fun();
         }
     })
 }
 
 function DashECharts(props)  {
+
     const {
         n_clicks, n_clicks_timestamp, 
         n_clicks_data, selected_data, brush_data, 
@@ -21,18 +24,16 @@ function DashECharts(props)  {
         not_merge, lazy_update, theme,
         style, opts, 
         maps,
-        funs, fun_keys, fun_paths,
+        funs, fun_keys, fun_values, fun_paths, fun_effects,
         id, setProps
     } = props;
 
-    console.log(funs, fun_paths, fun_keys)
-    if (!isEmpty(funs)) loadFuns(funs)
 
     function clickHandler(e) {
         setProps({
             n_clicks: n_clicks + 1,
             n_clicks_timestamp: Date.now(),
-            n_clicks_data: pick([
+            n_clicks_data: ramda.pick([
                 'componentType', 
                 'seriesType', 'seriesIndex', 'seriesName',
                 'name',
@@ -44,17 +45,17 @@ function DashECharts(props)  {
 
     function selectChangedHandler(e) {
         setProps({
-            selected_data: pick([
+            selected_data: ramda.pick([
                 'escapeConnect', 
                 'fromAction', 'fromActionPayload', 'isFromClick',
                 'selected', 'type'
-                ], e)
-            });
+            ], e)
+        });
     }
 
     function brushEndHandler(e) {
         setProps({
-            brush_data: pick([
+            brush_data: ramda.pick([
                 'areas', 'brushId', 'type'
             ], e)
         });
@@ -66,27 +67,18 @@ function DashECharts(props)  {
             'selectchanged': selectChangedHandler,
             'brushEnd': brushEndHandler,
         }
-        return pick(events, eventsDict)
+        return ramda.pick(events, eventsDict)
     }
 
-    const registerMapForEach = (value, key) => registerMap(key, value);
+    const registerMapForEach = (value, key) => echarts.registerMap(key, value);
 
-    useEffect(() => {
-        forEachObjIndexed(registerMapForEach, maps);
-    }, []);
 
     const funConverterKeys = (obj) => {
         Object.keys(obj).forEach(key => {
             if (typeof obj[key] === 'string') { 
-                // const funTrim = obj[key].trim()
 
                 if (fun_keys.includes(key)) {
-                    console.log('here')
-                    console.log(typeof obj[key])
                     obj[key] = funs[obj[key]]
-                    console.log(typeof obj[key])
-                    console.log('there')
-
                 } 
             }     
             else if (typeof obj[key] === 'object') {
@@ -94,19 +86,61 @@ function DashECharts(props)  {
             }
         })
     }
+
+    const funConverterValues = (obj) => {
+        Object.keys(obj).forEach(key => {
+            let v = obj[key]
+            if (typeof v === 'string') { 
+                if (fun_values.includes(v)) {
+                    obj[key] = funs[v]
+                } 
+            }     
+            else if (typeof v === 'object') {
+                funConverterValues(v)
+            }
+        })
+    }
     
     const funConverterPaths = (obj) => {
         for (const prop in fun_paths) {
-            assocPath(fun_paths[prop], funs[prop], obj)
+            ramda.assocPath(fun_paths[prop], funs[prop], obj)
         }
     }
 
-    if (!isEmpty(fun_keys)) funConverterKeys(option)
-    if (!isEmpty(fun_paths)) funConverterPaths(option)
+    const chartRef = useRef(null);
+    funs['echarts'] = echarts;
+    funs['ramda'] = ramda;
+    funs['gl'] = gl;
+    funs['ecStat'] = ecStat;
+    funs['chart'] = chartRef;
+    loadFuns(funs)
+
+    if (!ramda.isEmpty(fun_keys)) funConverterKeys(option)
+    if (!ramda.isEmpty(fun_values)) funConverterValues(option)
+    if (!ramda.isEmpty(fun_paths)) funConverterPaths(option)
+    
+    echarts.registerTransform(ecStat.transform.regression);
+    echarts.registerTransform(ecStat.transform.histogram);
+    echarts.registerTransform(ecStat.transform.clustering);
+    useEffect(() => {
+        if (!ramda.isEmpty(maps))   ramda.forEachObjIndexed(registerMapForEach, maps);
+        if (!ramda.isEmpty(fun_effects)) {
+            fun_effects.forEach(e => {
+                if (typeof e === 'string') {
+                    funs[e]()
+                } else {
+                    funs[e.name](e.option)
+                }
+            })
+        } 
+        funs['chart'] = chartRef;
+    }, []);
+
 
     return (
         <ReactECharts
             id={id}
+            ref={chartRef}
             option={option}
             notMerge={not_merge}
             lazyUpdate={lazy_update}
@@ -130,7 +164,9 @@ DashECharts.defaultProps = {
     opts: {},
     maps: {},
     fun_keys: [],
+    fun_values: [],
     fun_paths: {},
+    fun_effects: [],
     funs: {},
 };
 
@@ -150,7 +186,9 @@ DashECharts.propTypes = {
     maps: PropTypes.object,
     funs: PropTypes.object,
     fun_keys: PropTypes.array,
+    fun_values: PropTypes.array,
     fun_paths: PropTypes.object,
+    fun_effects: PropTypes.array,
     /**
      * The ID used to identify this component in Dash callbacks.
      */

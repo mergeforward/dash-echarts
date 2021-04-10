@@ -32,6 +32,10 @@ echarts_bar
 echarts_heat
 echarts_map
 echarts_scatter3d
+echarts_histbar
+echarts_regression
+echarts_customprofit
+
 ```
 
 ![](dash_echarts_bar.gif)
@@ -42,6 +46,8 @@ echarts_scatter3d
 
 ![](dash_echarts_scatter3d.gif)
 
+![](dash_echarts_histbar.gif)
+
 ## how to install
 
 ```bash
@@ -50,6 +56,7 @@ pip install dash_echarts
 
 ## release notes
 
+- 0.0.8 enchance funs & add scStat support
 - 0.0.7(0.0.6) add funs, fun_keys, fun_paths & disable fun_formatter
 - 0.0.5 add fun_formatter(testing) feature & gl support & more examples
 - 0.0.4 add map demo

@@ -1,4 +1,5 @@
 # AUTO GENERATED FILE - DO NOT EDIT
 
 export(DashECharts)
+export(chart)
 export(dashECharts)

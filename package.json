@@ -1,6 +1,6 @@
 {
   "name": "dash_echarts",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "echarts for dash",
   "repository": {
     "type": "git",
@@ -27,6 +27,7 @@
     "echarts": "^5.0.2",
     "echarts-for-react": "^3.0.1",
     "echarts-gl": "^2.0.2",
+    "echarts-stat": "^1.2.0",
     "ramda": "^0.26.1"
   },
   "devDependencies": {
@@ -42,13 +43,13 @@
     "eslint-config-prettier": "^6.0.0",
     "eslint-plugin-import": "^2.18.0",
     "eslint-plugin-react": "^7.14.2",
-    "npm": "^6.1.0",
+    "npm": "^7.9.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-docgen": "^4.1.1",
     "react-dom": "^16.8.6",
-    "styled-jsx": "^3.2.1",
     "style-loader": "^0.23.1",
+    "styled-jsx": "^3.2.1",
     "webpack": "4.36.1",
     "webpack-cli": "3.3.6",
     "webpack-serve": "3.1.0"

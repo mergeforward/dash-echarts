@@ -14,7 +14,7 @@ dashECharts(n_clicks=NULL, n_clicks_timestamp=NULL, n_clicks_data=NULL,
 selected_data=NULL, brush_data=NULL, option=NULL,
 notMerge=NULL, lazyUpdate=NULL, theme=NULL, events=NULL,
 style=NULL, opts=NULL, maps=NULL, funs=NULL, fun_keys=NULL,
-fun_paths=NULL, id=NULL)
+fun_values=NULL, fun_paths=NULL, fun_effects=NULL, id=NULL)
 }
 
 \arguments{
@@ -48,7 +48,11 @@ fun_paths=NULL, id=NULL)
 
 \item{fun_keys}{Unnamed list. }
 
+\item{fun_values}{Unnamed list. }
+
 \item{fun_paths}{Named list. }
+
+\item{fun_effects}{Unnamed list. }
 
 \item{id}{Character. The ID used to identify this component in Dash callbacks.}
 }

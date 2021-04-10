@@ -18,7 +18,7 @@ def gen_data(num):
 def main():
     '''
     dash_echarts examples
-    name: bar with echarts
+    name: heat with echarts
     author: dameng <pingf0@gmail.com>
     '''
     app = dash.Dash(__name__)
@@ -99,7 +99,25 @@ def main():
 
     app.layout = html.Div([
         dash_echarts.DashECharts(
+            fun_effects=[
+                {'name':'t', 'option':{'a':1, 'b':2}},
+                {'name':'t', 'option':{'a':3, 'b':4}}
+            ],
             funs = {
+                "t": '''
+                function(option){
+                    console.log(option)
+                    console.log('hahahahehehe')
+                    console.log(this.m)
+                    this.m()
+                }
+                ''',
+                
+                "m": '''
+                    function(){
+                        console.log('yiiyiyiyiyiiy')
+                    }
+                ''',
                 "fm": '''
                 function (p){ 
                     if (p.value[2]<60) 
@@ -115,8 +133,9 @@ def main():
             option = option,
             events = events,
             id='echarts',
-            fun_keys=['formatter'],
-            fun_paths={'fm': ['series', '0', 'label', 'formatter']},
+            fun_values=['fm'],
+            # fun_keys=['formatter'],
+            # fun_paths={'fm': ['series', '0', 'label', 'formatter']},
             style={
                 "width": '100vw',
                 "height": '100vh',

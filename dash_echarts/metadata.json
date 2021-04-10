@@ -157,6 +157,17 @@
           "computed": false
         }
       },
+      "fun_values": {
+        "type": {
+          "name": "array"
+        },
+        "required": false,
+        "description": "",
+        "defaultValue": {
+          "value": "[]",
+          "computed": false
+        }
+      },
       "fun_paths": {
         "type": {
           "name": "object"
@@ -165,6 +176,17 @@
         "description": "",
         "defaultValue": {
           "value": "{}",
+          "computed": false
+        }
+      },
+      "fun_effects": {
+        "type": {
+          "name": "array"
+        },
+        "required": false,
+        "description": "",
+        "defaultValue": {
+          "value": "[]",
           "computed": false
         }
       },

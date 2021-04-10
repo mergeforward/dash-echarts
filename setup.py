@@ -32,6 +32,9 @@ setup(
             'echarts_heat=dash_echarts.examples.heat:main',
             'echarts_scatter3d=dash_echarts.examples.scatter3d:main',
             'echarts_map=dash_echarts.examples.map:main',
+            'echarts_histbar=dash_echarts.examples.hist_bar:main',
+            'echarts_regression=dash_echarts.examples.hist_regression:main',
+            'echarts_customprofit=dash_echarts.examples.custom_profit:main',
         ]
     },
 )

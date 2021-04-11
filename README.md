@@ -1,5 +1,9 @@
 # dash_echarts
 
+## demo
+
+
+![](dash_echarts_stocks.gif)
 
 ## quick play
 

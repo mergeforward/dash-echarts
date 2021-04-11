@@ -63,9 +63,9 @@ function DashECharts(props)  {
 
     function eventsHandlers(events) {
         let eventsDict = {
-            'click': clickHandler,
-            'selectchanged': selectChangedHandler,
-            'brushEnd': brushEndHandler,
+            'click': events => clickHandler(events),
+            'selectchanged': events => selectChangedHandler(events),
+            'brushEnd': events => brushEndHandler(events),
         }
         return ramda.pick(events, eventsDict)
     }
@@ -134,6 +134,37 @@ function DashECharts(props)  {
             })
         } 
         funs['chart'] = chartRef;
+
+        const chart = chartRef.current.getEchartsInstance();
+        chart.on("click", e => {
+            setProps({
+                n_clicks: n_clicks + 1,
+                n_clicks_timestamp: Date.now(),
+                n_clicks_data: ramda.pick([
+                    'componentType', 
+                    'seriesType', 'seriesIndex', 'seriesName',
+                    'name',
+                    'dataIndex', 'data', 'dataType',
+                    'value', 'color',
+                    ], e)
+            });
+        });
+        chart.on("selectchanged", e => {
+            setProps({
+                selected_data: ramda.pick([
+                    'escapeConnect', 
+                    'fromAction', 'fromActionPayload', 'isFromClick',
+                    'selected', 'type'
+                ], e)
+            });
+        })
+        chart.on("brushEnd", e => {
+            setProps({
+                brush_data: ramda.pick([
+                    'areas', 'brushId', 'type'
+                ], e)
+            });
+        })
     }, []);
 
 
@@ -145,7 +176,7 @@ function DashECharts(props)  {
             notMerge={not_merge}
             lazyUpdate={lazy_update}
             theme={theme}
-            onEvents={eventsHandlers(events)}
+            // onEvents={eventsHandlers(events)}
             style={style}
             opts={opts}
         />

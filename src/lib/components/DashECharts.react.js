@@ -5,10 +5,12 @@ import * as gl from 'echarts-gl';
 import * as echarts from 'echarts';
 import * as ramda from 'ramda';
 import * as ecStat from 'echarts-stat';
+import bmap from 'echarts/extension/bmap/bmap';
+
 
 const loadFuns = (obj) => {
     Object.keys(obj).forEach(key => {
-        if (typeof obj[key] === 'string' && !['chart','echarts', 'ramda', 'gl', 'ecStat'].includes(key)) {
+        if (typeof obj[key] === 'string' && !['chart','echarts', 'bmap', 'ramda', 'gl', 'ecStat'].includes(key)) {
             let fun = new Function("return "+obj[key].trim()+".bind(this)").bind(obj)
             obj[key] = fun();
         }
@@ -73,21 +75,22 @@ function DashECharts(props)  {
     const registerMapForEach = (value, key) => echarts.registerMap(key, value);
 
 
-    const funConverterKeys = (obj) => {
+    const funConvertKeys = (obj) => {
         Object.keys(obj).forEach(key => {
-            if (typeof obj[key] === 'string') { 
+            let v = obj[key]
+            if (typeof v === 'string') { 
 
                 if (fun_keys.includes(key)) {
-                    obj[key] = funs[obj[key]]
+                    obj[key] = funs[v]
                 } 
             }     
-            else if (typeof obj[key] === 'object') {
-                funConverterKeys(obj[key])
+            else if (typeof v === 'object') {
+                funConvertKeys(v)
             }
         })
     }
 
-    const funConverterValues = (obj) => {
+    const funConvertValues = (obj) => {
         Object.keys(obj).forEach(key => {
             let v = obj[key]
             if (typeof v === 'string') { 
@@ -96,12 +99,12 @@ function DashECharts(props)  {
                 } 
             }     
             else if (typeof v === 'object') {
-                funConverterValues(v)
+                funConvertValues(v)
             }
         })
     }
     
-    const funConverterPaths = (obj) => {
+    const funConvertPaths = (obj) => {
         for (const prop in fun_paths) {
             ramda.assocPath(fun_paths[prop], funs[prop], obj)
         }
@@ -109,15 +112,16 @@ function DashECharts(props)  {
 
     const chartRef = useRef(null);
     funs['echarts'] = echarts;
+    funs['bmap'] = bmap;
     funs['ramda'] = ramda;
     funs['gl'] = gl;
     funs['ecStat'] = ecStat;
     funs['chart'] = chartRef;
     loadFuns(funs)
 
-    if (!ramda.isEmpty(fun_keys)) funConverterKeys(option)
-    if (!ramda.isEmpty(fun_values)) funConverterValues(option)
-    if (!ramda.isEmpty(fun_paths)) funConverterPaths(option)
+    if (!ramda.isEmpty(fun_keys)) funConvertKeys(option)
+    if (!ramda.isEmpty(fun_values)) funConvertValues(option)
+    if (!ramda.isEmpty(fun_paths)) funConvertPaths(option)
     
     echarts.registerTransform(ecStat.transform.regression);
     echarts.registerTransform(ecStat.transform.histogram);

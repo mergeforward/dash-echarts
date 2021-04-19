@@ -35,6 +35,7 @@ setup(
             'echarts_histbar=dash_echarts.examples.hist_bar:main',
             'echarts_regression=dash_echarts.examples.hist_regression:main',
             'echarts_customprofit=dash_echarts.examples.custom_profit:main',
+            'echarts_air=dash_echarts.examples.air:main',
         ]
     },
 )

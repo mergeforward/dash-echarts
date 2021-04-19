@@ -8,39 +8,57 @@ class DashECharts(Component):
 
 
 Keyword arguments:
-- n_clicks (number; default 0)
-- n_clicks_timestamp (number; default -1)
-- n_clicks_data (dict; optional)
-- selected_data (dict; optional)
+
+- id (string; optional):
+    The ID used to identify this component in Dash callbacks.
+
 - brush_data (dict; optional)
-- option (dict; optional)
-- notMerge (boolean; optional)
-- lazyUpdate (boolean; optional)
-- theme (string; default 'vintage')
+
 - events (list; optional)
-- style (dict; optional)
-- opts (dict; optional)
-- maps (dict; optional)
-- funs (dict; optional)
-- fun_keys (list; optional)
-- fun_values (list; optional)
-- fun_paths (dict; optional)
+
 - fun_effects (list; optional)
-- id (string; optional): The ID used to identify this component in Dash callbacks."""
+
+- fun_keys (list; optional)
+
+- fun_paths (dict; optional)
+
+- fun_values (list; optional)
+
+- funs (dict; optional)
+
+- lazyUpdate (boolean; optional)
+
+- maps (dict; optional)
+
+- n_clicks (number; default 0)
+
+- n_clicks_data (dict; optional)
+
+- n_clicks_timestamp (number; default -1)
+
+- notMerge (boolean; optional)
+
+- option (dict; optional)
+
+- opts (dict; optional)
+
+- selected_data (dict; optional)
+
+- style (dict; optional)
+
+- theme (string; default 'vintage')"""
     @_explicitize_args
     def __init__(self, n_clicks=Component.UNDEFINED, n_clicks_timestamp=Component.UNDEFINED, n_clicks_data=Component.UNDEFINED, selected_data=Component.UNDEFINED, brush_data=Component.UNDEFINED, option=Component.UNDEFINED, notMerge=Component.UNDEFINED, lazyUpdate=Component.UNDEFINED, theme=Component.UNDEFINED, events=Component.UNDEFINED, style=Component.UNDEFINED, opts=Component.UNDEFINED, maps=Component.UNDEFINED, funs=Component.UNDEFINED, fun_keys=Component.UNDEFINED, fun_values=Component.UNDEFINED, fun_paths=Component.UNDEFINED, fun_effects=Component.UNDEFINED, id=Component.UNDEFINED, **kwargs):
-        self._prop_names = ['n_clicks', 'n_clicks_timestamp', 'n_clicks_data', 'selected_data', 'brush_data', 'option', 'notMerge', 'lazyUpdate', 'theme', 'events', 'style', 'opts', 'maps', 'funs', 'fun_keys', 'fun_values', 'fun_paths', 'fun_effects', 'id']
+        self._prop_names = ['id', 'brush_data', 'events', 'fun_effects', 'fun_keys', 'fun_paths', 'fun_values', 'funs', 'lazyUpdate', 'maps', 'n_clicks', 'n_clicks_data', 'n_clicks_timestamp', 'notMerge', 'option', 'opts', 'selected_data', 'style', 'theme']
         self._type = 'DashECharts'
         self._namespace = 'dash_echarts'
         self._valid_wildcard_attributes =            []
-        self.available_properties = ['n_clicks', 'n_clicks_timestamp', 'n_clicks_data', 'selected_data', 'brush_data', 'option', 'notMerge', 'lazyUpdate', 'theme', 'events', 'style', 'opts', 'maps', 'funs', 'fun_keys', 'fun_values', 'fun_paths', 'fun_effects', 'id']
+        self.available_properties = ['id', 'brush_data', 'events', 'fun_effects', 'fun_keys', 'fun_paths', 'fun_values', 'funs', 'lazyUpdate', 'maps', 'n_clicks', 'n_clicks_data', 'n_clicks_timestamp', 'notMerge', 'option', 'opts', 'selected_data', 'style', 'theme']
         self.available_wildcard_properties =            []
-
         _explicit_args = kwargs.pop('_explicit_args')
         _locals = locals()
         _locals.update(kwargs)  # For wildcard attrs
         args = {k: _locals[k] for k in _explicit_args if k != 'children'}
-
         for k in []:
             if k not in args:
                 raise TypeError(

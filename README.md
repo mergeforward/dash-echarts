@@ -52,6 +52,8 @@ echarts_customprofit
 
 ![](dash_echarts_histbar.gif)
 
+![](dash_echarts_air.gif)
+
 ## how to install
 
 ```bash
@@ -60,6 +62,7 @@ pip install dash_echarts
 
 ## release notes
 
+- 0.0.9 enable baidu bmap & add echarts_air example
 - 0.0.8 enchance funs & add ecStat support
 - 0.0.7(0.0.6) add funs, fun_keys, fun_paths & disable fun_formatter
 - 0.0.5 add fun_formatter(testing) feature & gl support & more examples

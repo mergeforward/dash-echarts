@@ -59,49 +59,6 @@
           "computed": false
         }
       },
-      "option": {
-        "type": {
-          "name": "object"
-        },
-        "required": false,
-        "description": ""
-      },
-      "notMerge": {
-        "type": {
-          "name": "bool"
-        },
-        "required": false,
-        "description": ""
-      },
-      "lazyUpdate": {
-        "type": {
-          "name": "bool"
-        },
-        "required": false,
-        "description": ""
-      },
-      "theme": {
-        "type": {
-          "name": "string"
-        },
-        "required": false,
-        "description": "",
-        "defaultValue": {
-          "value": "'vintage'",
-          "computed": false
-        }
-      },
-      "events": {
-        "type": {
-          "name": "array"
-        },
-        "required": false,
-        "description": "",
-        "defaultValue": {
-          "value": "[]",
-          "computed": false
-        }
-      },
       "style": {
         "type": {
           "name": "object"
@@ -113,7 +70,7 @@
           "computed": false
         }
       },
-      "opts": {
+      "option": {
         "type": {
           "name": "object"
         },
@@ -187,6 +144,39 @@
         "description": "",
         "defaultValue": {
           "value": "[]",
+          "computed": false
+        }
+      },
+      "fun_prepares": {
+        "type": {
+          "name": "array"
+        },
+        "required": false,
+        "description": "",
+        "defaultValue": {
+          "value": "[]",
+          "computed": false
+        }
+      },
+      "mapbox_token": {
+        "type": {
+          "name": "string"
+        },
+        "required": false,
+        "description": "",
+        "defaultValue": {
+          "value": "null",
+          "computed": false
+        }
+      },
+      "bmap_token": {
+        "type": {
+          "name": "string"
+        },
+        "required": false,
+        "description": "",
+        "defaultValue": {
+          "value": "null",
           "computed": false
         }
       },

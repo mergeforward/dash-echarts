@@ -54,6 +54,10 @@ echarts_customprofit
 
 ![](dash_echarts_air.gif)
 
+![](dash_echarts_mapbox_bar3d.gif)
+
+> contact the author for commercial dashboard support!
+
 ## how to install
 
 ```bash
@@ -62,6 +66,8 @@ pip install dash_echarts
 
 ## release notes
 
+- 0.0.10 remove dependencies of echarts-for-react, enable mapbox-gl!
+  notes: remove deprecated events for versions after 0.0.9
 - 0.0.9 enable baidu bmap & add echarts_air example
 - 0.0.8 enchance funs & add ecStat support
 - 0.0.7(0.0.6) add funs, fun_keys, fun_paths & disable fun_formatter

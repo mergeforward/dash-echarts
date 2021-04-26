@@ -20,7 +20,7 @@ class App extends Component {
     render() {
         return (
             <div>
-                <DashECharts1
+                <DashECharts
                     setProps={this.setProps}
                     {...this.state}
                 />

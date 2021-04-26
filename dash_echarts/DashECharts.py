@@ -12,9 +12,9 @@ Keyword arguments:
 - id (string; optional):
     The ID used to identify this component in Dash callbacks.
 
-- brush_data (dict; optional)
+- bmap_token (string; optional)
 
-- events (list; optional)
+- brush_data (dict; optional)
 
 - fun_effects (list; optional)
 
@@ -22,11 +22,13 @@ Keyword arguments:
 
 - fun_paths (dict; optional)
 
+- fun_prepares (list; optional)
+
 - fun_values (list; optional)
 
 - funs (dict; optional)
 
-- lazyUpdate (boolean; optional)
+- mapbox_token (string; optional)
 
 - maps (dict; optional)
 
@@ -36,24 +38,18 @@ Keyword arguments:
 
 - n_clicks_timestamp (number; default -1)
 
-- notMerge (boolean; optional)
-
 - option (dict; optional)
-
-- opts (dict; optional)
 
 - selected_data (dict; optional)
 
-- style (dict; optional)
-
-- theme (string; default 'vintage')"""
+- style (dict; optional)"""
     @_explicitize_args
-    def __init__(self, n_clicks=Component.UNDEFINED, n_clicks_timestamp=Component.UNDEFINED, n_clicks_data=Component.UNDEFINED, selected_data=Component.UNDEFINED, brush_data=Component.UNDEFINED, option=Component.UNDEFINED, notMerge=Component.UNDEFINED, lazyUpdate=Component.UNDEFINED, theme=Component.UNDEFINED, events=Component.UNDEFINED, style=Component.UNDEFINED, opts=Component.UNDEFINED, maps=Component.UNDEFINED, funs=Component.UNDEFINED, fun_keys=Component.UNDEFINED, fun_values=Component.UNDEFINED, fun_paths=Component.UNDEFINED, fun_effects=Component.UNDEFINED, id=Component.UNDEFINED, **kwargs):
-        self._prop_names = ['id', 'brush_data', 'events', 'fun_effects', 'fun_keys', 'fun_paths', 'fun_values', 'funs', 'lazyUpdate', 'maps', 'n_clicks', 'n_clicks_data', 'n_clicks_timestamp', 'notMerge', 'option', 'opts', 'selected_data', 'style', 'theme']
+    def __init__(self, n_clicks=Component.UNDEFINED, n_clicks_timestamp=Component.UNDEFINED, n_clicks_data=Component.UNDEFINED, selected_data=Component.UNDEFINED, brush_data=Component.UNDEFINED, style=Component.UNDEFINED, option=Component.UNDEFINED, maps=Component.UNDEFINED, funs=Component.UNDEFINED, fun_keys=Component.UNDEFINED, fun_values=Component.UNDEFINED, fun_paths=Component.UNDEFINED, fun_effects=Component.UNDEFINED, fun_prepares=Component.UNDEFINED, mapbox_token=Component.UNDEFINED, bmap_token=Component.UNDEFINED, id=Component.UNDEFINED, **kwargs):
+        self._prop_names = ['id', 'bmap_token', 'brush_data', 'fun_effects', 'fun_keys', 'fun_paths', 'fun_prepares', 'fun_values', 'funs', 'mapbox_token', 'maps', 'n_clicks', 'n_clicks_data', 'n_clicks_timestamp', 'option', 'selected_data', 'style']
         self._type = 'DashECharts'
         self._namespace = 'dash_echarts'
         self._valid_wildcard_attributes =            []
-        self.available_properties = ['id', 'brush_data', 'events', 'fun_effects', 'fun_keys', 'fun_paths', 'fun_values', 'funs', 'lazyUpdate', 'maps', 'n_clicks', 'n_clicks_data', 'n_clicks_timestamp', 'notMerge', 'option', 'opts', 'selected_data', 'style', 'theme']
+        self.available_properties = ['id', 'bmap_token', 'brush_data', 'fun_effects', 'fun_keys', 'fun_paths', 'fun_prepares', 'fun_values', 'funs', 'mapbox_token', 'maps', 'n_clicks', 'n_clicks_data', 'n_clicks_timestamp', 'option', 'selected_data', 'style']
         self.available_wildcard_properties =            []
         _explicit_args = kwargs.pop('_explicit_args')
         _locals = locals()

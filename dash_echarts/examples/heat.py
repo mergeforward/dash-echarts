@@ -95,7 +95,6 @@ def main():
             }
         }]
     }
-    events = []
 
     app.layout = html.Div([
         dash_echarts.DashECharts(
@@ -131,7 +130,6 @@ def main():
                 '''
             },
             option = option,
-            events = events,
             id='echarts',
             fun_values=['fm'],
             # fun_keys=['formatter'],

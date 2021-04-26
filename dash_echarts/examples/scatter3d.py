@@ -110,15 +110,12 @@ def main():
         }
     )
 
-    events = []
-
     app.layout = dbc.Container(
         [
             dbc.Row(
                 [
                     dash_echarts.DashECharts(
                         option = option,
-                        events = events,
                         id='echarts',
                         style={
                             "width": '100vw',

@@ -421,7 +421,7 @@ def main():
     author: dameng <pingf0@gmail.com>
     '''
     external_scripts = [
-    f'http://api.map.baidu.com/api?v=3.0&ak={sys.argv[1]})',
+        f'http://api.map.baidu.com/api?v=3.0&ak={sys.argv[1]})',
     ]
     app = dash.Dash(__name__,
         external_scripts=external_scripts
@@ -593,6 +593,7 @@ def main():
 
     app.layout = html.Div([
         dash_echarts.DashECharts(
+            bmap_token=sys.argv[1],
             option = option,
             id='echarts',
             funs= {

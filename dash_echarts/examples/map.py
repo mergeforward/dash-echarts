@@ -67,7 +67,7 @@ def main():
         ]
     }
 
-    events = ["click"]
+    # events = ["click"]
     basepath = path.dirname(__file__)
     filepath = path.abspath(path.join(basepath, 'china.json'))
 
@@ -79,7 +79,7 @@ def main():
         html.P("hello", id='output'),
         dash_echarts.DashECharts(
             option = option,
-            events = events,
+            # events = events,
             id='echarts',
             style={
                 "width": '100vw',

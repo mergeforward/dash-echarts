@@ -10,11 +10,12 @@
 }
 
 \usage{
-dashECharts(id=NULL, bmap_token=NULL, brush_data=NULL, fun_effects=NULL,
-fun_keys=NULL, fun_paths=NULL, fun_prepares=NULL,
-fun_values=NULL, funs=NULL, mapbox_token=NULL, maps=NULL,
-n_clicks=NULL, n_clicks_data=NULL, n_clicks_timestamp=NULL,
-option=NULL, selected_data=NULL, style=NULL)
+dashECharts(id=NULL, bmap_token=NULL, brush_data=NULL, event=NULL,
+fun_effects=NULL, fun_keys=NULL, fun_paths=NULL,
+fun_prepares=NULL, fun_values=NULL, funs=NULL,
+mapbox_token=NULL, maps=NULL, n_clicks=NULL,
+n_clicks_data=NULL, n_clicks_timestamp=NULL, option=NULL,
+selected_data=NULL, style=NULL)
 }
 
 \arguments{
@@ -23,6 +24,8 @@ option=NULL, selected_data=NULL, style=NULL)
 \item{bmap_token}{Character. }
 
 \item{brush_data}{Named list. }
+
+\item{event}{Named list. }
 
 \item{fun_effects}{Unnamed list. }
 

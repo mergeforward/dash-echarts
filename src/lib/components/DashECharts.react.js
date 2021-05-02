@@ -5,9 +5,26 @@ import * as echarts from 'echarts';
 import * as ramda from 'ramda';
 import * as ecStat from 'echarts-stat';
 import bmap from 'echarts/extension/bmap/bmap';
-import 'mapbox-gl/dist/mapbox-gl.css'
+import 'mapbox-gl/dist/mapbox-gl.css';
 import mapboxgl from 'mapbox-gl';
 
+
+const getCircularReplacer = () => {
+  const seen = new WeakSet();
+  return (key, value) => {
+    if (typeof value === "object" && value !== null) {
+      if (seen.has(value)) {
+        return;
+      }
+      seen.add(value);
+    }
+    return value;
+  };
+};
+
+const safeObj = (e) => {
+    return JSON.parse(JSON.stringify(e, getCircularReplacer()));
+}
 
 const loadFuns = (obj) => {
     Object.keys(obj).forEach(key => {
@@ -20,9 +37,9 @@ const loadFuns = (obj) => {
 
 function DashECharts(props)  {
     const {
-        n_clicks, n_clicks_timestamp,
-        n_clicks_data, selected_data, brush_data,
         // eslint-disable-next-line no-unused-vars
+        n_clicks, n_clicks_timestamp, n_clicks_data, selected_data, brush_data,
+        event,
         option,
         style, id, setProps,
         maps,
@@ -36,37 +53,44 @@ function DashECharts(props)  {
 
 
     const funConvertKeys = (obj) => {
-        Object.keys(obj).forEach(key => {
-            const v = obj[key]
-            if (typeof v === 'string') {
+        if (obj !== null) {
+            Object.keys(obj).forEach(key => {
+                const v = obj[key]
+                if (typeof v === 'string') {
 
-                if (fun_keys.includes(key)) {
-                    obj[key] = funs[v]
+                    if (fun_keys.includes(key)) {
+                        obj[key] = funs[v]
+                    }
+                } else if (typeof v === 'object') {
+                    funConvertKeys(v)
                 }
-            }
-            else if (typeof v === 'object') {
-                funConvertKeys(v)
-            }
-        })
+            })
+        }
     }
 
     const funConvertValues = (obj) => {
-        Object.keys(obj).forEach(key => {
-            const v = obj[key]
-            if (typeof v === 'string') {
-                if (fun_values.includes(v)) {
-                    obj[key] = funs[v]
-                }
-            }
-            else if (typeof v === 'object') {
-                funConvertValues(v)
-            }
-        })
+        if (obj !== null) {
+            Object.keys(obj).forEach(key => {
+                const v = obj[key]
+                if (!ramda.isEmpty(v)) {
+                    if (typeof v === 'string') {
+                        if (fun_values.includes(v)) {
+                            obj[key] = funs[v]
+                        }
+                    }
+                    else if (typeof v === 'object') {
+                        funConvertValues(v)
+                    }
+                } 
+            })
+        }
     }
 
     const funConvertPaths = (obj) => {
-        for (const key of fun_paths) {
-            ramda.assocPath(fun_paths[key], funs[key], obj)
+        if (obj !== null) {
+            for (const key of fun_paths) {
+                ramda.assocPath(fun_paths[key], funs[key], obj)
+            }
         }
     }
 
@@ -108,21 +132,15 @@ function DashECharts(props)  {
     echarts.registerTransform(ecStat.transform.clustering);
 
     useEffect(() => {
-        if (!ramda.isEmpty(fun_effects)) {
-            fun_effects.forEach(e => {
-                if (typeof e === 'string') {
-                    funs[e]()
-                } else {
-                    funs[e.name](e.option)
-                }
-            })
-        }
         const myChart = echarts.init(chartRef.current)
         setChart(myChart)
 
         funs.chart = myChart;
         myChart.on("click", e => {
+            // console.log(Object.keys(e))
+            // console.log(JSON.stringify(e.event.event))
             setProps({
+                event: e.event.event,
                 n_clicks: n_clicks + 1,
                 n_clicks_timestamp: Date.now(),
                 n_clicks_data: ramda.pick([
@@ -151,6 +169,15 @@ function DashECharts(props)  {
             });
         })
 
+        if (!ramda.isEmpty(fun_effects)) {
+            fun_effects.forEach(e => {
+                if (typeof e === 'string') {
+                    funs[e]()
+                } else {
+                    funs[e.name](e.option)
+                }
+            })
+        }
     }, []);
 
     window.onresize = function() {
@@ -196,6 +223,7 @@ DashECharts.propTypes = {
     selected_data: PropTypes.object,
     brush_data: PropTypes.object,
     style: PropTypes.object,
+    event: PropTypes.object,
     option: PropTypes.object,
     maps: PropTypes.object,
     funs: PropTypes.object,

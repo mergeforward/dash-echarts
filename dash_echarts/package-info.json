@@ -1,6 +1,6 @@
 {
   "name": "dash_echarts",
-  "version": "0.0.10",
+  "version": "0.0.10.2",
   "description": "echarts for dash",
   "repository": {
     "type": "git",
@@ -27,7 +27,7 @@
     "echarts": "^5.0.2",
     "echarts-gl": "^2.0.4",
     "echarts-stat": "^1.2.0",
-    "mapbox-gl": "^1.0.0",
+    "mapbox-gl": "1.0",
     "ramda": "^0.26.1"
   },
   "devDependencies": {

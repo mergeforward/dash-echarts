@@ -425,6 +425,7 @@ def main():
     ]
     app = dash.Dash(__name__,
         external_scripts=external_scripts
+
     )
 
     option = {

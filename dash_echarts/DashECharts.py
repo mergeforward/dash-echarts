@@ -16,6 +16,8 @@ Keyword arguments:
 
 - brush_data (dict; optional)
 
+- event (dict; optional)
+
 - fun_effects (list; optional)
 
 - fun_keys (list; optional)
@@ -44,12 +46,12 @@ Keyword arguments:
 
 - style (dict; optional)"""
     @_explicitize_args
-    def __init__(self, n_clicks=Component.UNDEFINED, n_clicks_timestamp=Component.UNDEFINED, n_clicks_data=Component.UNDEFINED, selected_data=Component.UNDEFINED, brush_data=Component.UNDEFINED, style=Component.UNDEFINED, option=Component.UNDEFINED, maps=Component.UNDEFINED, funs=Component.UNDEFINED, fun_keys=Component.UNDEFINED, fun_values=Component.UNDEFINED, fun_paths=Component.UNDEFINED, fun_effects=Component.UNDEFINED, fun_prepares=Component.UNDEFINED, mapbox_token=Component.UNDEFINED, bmap_token=Component.UNDEFINED, id=Component.UNDEFINED, **kwargs):
-        self._prop_names = ['id', 'bmap_token', 'brush_data', 'fun_effects', 'fun_keys', 'fun_paths', 'fun_prepares', 'fun_values', 'funs', 'mapbox_token', 'maps', 'n_clicks', 'n_clicks_data', 'n_clicks_timestamp', 'option', 'selected_data', 'style']
+    def __init__(self, n_clicks=Component.UNDEFINED, n_clicks_timestamp=Component.UNDEFINED, n_clicks_data=Component.UNDEFINED, selected_data=Component.UNDEFINED, brush_data=Component.UNDEFINED, style=Component.UNDEFINED, event=Component.UNDEFINED, option=Component.UNDEFINED, maps=Component.UNDEFINED, funs=Component.UNDEFINED, fun_keys=Component.UNDEFINED, fun_values=Component.UNDEFINED, fun_paths=Component.UNDEFINED, fun_effects=Component.UNDEFINED, fun_prepares=Component.UNDEFINED, mapbox_token=Component.UNDEFINED, bmap_token=Component.UNDEFINED, id=Component.UNDEFINED, **kwargs):
+        self._prop_names = ['id', 'bmap_token', 'brush_data', 'event', 'fun_effects', 'fun_keys', 'fun_paths', 'fun_prepares', 'fun_values', 'funs', 'mapbox_token', 'maps', 'n_clicks', 'n_clicks_data', 'n_clicks_timestamp', 'option', 'selected_data', 'style']
         self._type = 'DashECharts'
         self._namespace = 'dash_echarts'
         self._valid_wildcard_attributes =            []
-        self.available_properties = ['id', 'bmap_token', 'brush_data', 'fun_effects', 'fun_keys', 'fun_paths', 'fun_prepares', 'fun_values', 'funs', 'mapbox_token', 'maps', 'n_clicks', 'n_clicks_data', 'n_clicks_timestamp', 'option', 'selected_data', 'style']
+        self.available_properties = ['id', 'bmap_token', 'brush_data', 'event', 'fun_effects', 'fun_keys', 'fun_paths', 'fun_prepares', 'fun_values', 'funs', 'mapbox_token', 'maps', 'n_clicks', 'n_clicks_data', 'n_clicks_timestamp', 'option', 'selected_data', 'style']
         self.available_wildcard_properties =            []
         _explicit_args = kwargs.pop('_explicit_args')
         _locals = locals()

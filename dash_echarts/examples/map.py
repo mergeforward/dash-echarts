@@ -93,7 +93,7 @@ def main():
 
 
     @app.callback(
-        Output('output', 'ehildren'),
+        Output('output', 'children'),
         [Input('echarts', 'click_data')])
     def update(data):
         if data:

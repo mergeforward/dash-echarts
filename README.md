@@ -117,12 +117,10 @@ def main():
             'smooth': True
         }]
     } 
-    events = []
 
     app.layout = html.Div([
         dash_echarts.DashECharts(
             option = option,
-            events = events,
             id='echarts',
             style={
                 "width": '100vw',

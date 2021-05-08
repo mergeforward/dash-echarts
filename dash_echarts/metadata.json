@@ -26,7 +26,7 @@
           "computed": false
         }
       },
-      "n_clicks_data": {
+      "click_data": {
         "type": {
           "name": "object"
         },

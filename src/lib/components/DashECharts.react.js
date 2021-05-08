@@ -28,7 +28,7 @@ const safeObj = (e) => {
 
 const loadFuns = (obj) => {
     Object.keys(obj).forEach(key => {
-        if (typeof obj[key] === 'string' && !['chart','echarts', 'bmap', 'ramda', 'gl', 'ecStat', 'mapboxgl'].includes(key)) {
+        if (etupypeof obj[key] === 'string' && !['chart','echarts', 'bmap', 'ramda', 'gl', 'ecStat', 'mapboxgl'].includes(key)) {
             const fun = new Function("return "+obj[key].trim()+".bind(this)").bind(obj)
             obj[key] = fun();
         }
@@ -38,7 +38,9 @@ const loadFuns = (obj) => {
 function DashECharts(props)  {
     const {
         // eslint-disable-next-line no-unused-vars
-        n_clicks, n_clicks_timestamp, n_clicks_data, selected_data, brush_data,
+        n_clicks, n_clicks_timestamp, click_data,
+        selected_data,
+        brush_data,
         event,
         option,
         style, id, setProps,
@@ -137,35 +139,44 @@ function DashECharts(props)  {
 
         funs.chart = myChart;
         myChart.on("click", e => {
-            // console.log(Object.keys(e))
-            // console.log(JSON.stringify(e.event.event))
+            const ts = Date.now()
+            const clickCount = n_clicks + 1
+            const data = ramda.pick([
+                'componentType',
+                'seriesType', 'seriesIndex', 'seriesName',
+                'name',
+                'dataIndex', 'data', 'dataType',
+                'value', 'color',
+                ], e)
+            data.n_clicks = clickCount;
+            data.core_timestamp = ts;
             setProps({
                 event: e.event.event,
-                n_clicks: n_clicks + 1,
-                n_clicks_timestamp: Date.now(),
-                n_clicks_data: ramda.pick([
-                    'componentType',
-                    'seriesType', 'seriesIndex', 'seriesName',
-                    'name',
-                    'dataIndex', 'data', 'dataType',
-                    'value', 'color',
-                    ], e)
+                n_clicks: clickCount,
+                n_clicks_timestamp: ts,
+                click_data: data
             });
         });
         myChart.on("selectchanged", e => {
+            const ts = Date.now()
+            const data = ramda.pick([
+                'escapeConnect',
+                'fromAction', 'fromActionPayload', 'isFromClick',
+                'selected', 'type'
+            ], e)
+            data.core_timestamp = ts;
             setProps({
-                selected_data: ramda.pick([
-                    'escapeConnect',
-                    'fromAction', 'fromActionPayload', 'isFromClick',
-                    'selected', 'type'
-                ], e)
+                selected_data: data
             });
         })
         myChart.on("brushEnd", e => {
+            const ts = Date.now()
+            const data = ramda.pick([
+                'areas', 'brushId', 'type'
+            ], e)
+            data.core_timestamp = ts;
             setProps({
-                brush_data: ramda.pick([
-                    'areas', 'brushId', 'type'
-                ], e)
+                brush_data: data
             });
         })
 
@@ -200,7 +211,7 @@ function DashECharts(props)  {
 DashECharts.defaultProps = {
     n_clicks: 0,
     n_clicks_timestamp: -1,
-    n_clicks_data: {},
+    click_data: {},
     selected_data: {},
     brush_data: {},
     style: {},
@@ -219,7 +230,7 @@ DashECharts.defaultProps = {
 DashECharts.propTypes = {
     n_clicks: PropTypes.number,
     n_clicks_timestamp: PropTypes.number,
-    n_clicks_data: PropTypes.object,
+    click_data: PropTypes.object,
     selected_data: PropTypes.object,
     brush_data: PropTypes.object,
     style: PropTypes.object,

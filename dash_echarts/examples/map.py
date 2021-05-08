@@ -93,8 +93,8 @@ def main():
 
 
     @app.callback(
-        Output('output', 'children'),
-        [Input('echarts', 'n_clicks_data')])
+        Output('output', 'ehildren'),
+        [Input('echarts', 'click_data')])
     def update(data):
         if data:
             return f"clicked: {data['name']}"

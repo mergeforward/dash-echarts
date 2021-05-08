@@ -66,6 +66,7 @@ pip install dash_echarts
 
 ## release notes
 
+- 0.0.11 fix bugs of echarts' event not updating the dash components, use click_data for receiving event from echarts 
 - 0.0.10 remove dependencies of echarts-for-react, enable mapbox-gl!
   notes: remove deprecated events for versions after 0.0.9
 - 0.0.9 enable baidu bmap & add echarts_air example

@@ -20,7 +20,7 @@ setup(
     description=package.get('description', package_name),
     install_requires=['dash'],
     extras_require={
-        'play': ['dash-bootstrap-components']
+        'play': ['dash-bootstrap-components', 'dash_tabulator', 'dash_extensions']
     },
     classifiers = [
         'Framework :: Dash',

@@ -1,6 +1,6 @@
 {
   "name": "dash_echarts",
-  "version": "0.0.11",
+  "version": "0.0.11.2",
   "description": "echarts for dash",
   "repository": {
     "type": "git",
@@ -24,7 +24,7 @@
   "author": "dameng <pingf0@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "echarts": "^5.0.2",
+    "echarts": "^5.1.1",
     "echarts-gl": "^2.0.4",
     "echarts-stat": "^1.2.0",
     "mapbox-gl": "1.0",

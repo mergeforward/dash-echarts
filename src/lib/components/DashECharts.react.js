@@ -28,7 +28,7 @@ const safeObj = (e) => {
 
 const loadFuns = (obj) => {
     Object.keys(obj).forEach(key => {
-        if (etupypeof obj[key] === 'string' && !['chart','echarts', 'bmap', 'ramda', 'gl', 'ecStat', 'mapboxgl'].includes(key)) {
+        if (typeof obj[key] === 'string' && !['chart','echarts', 'bmap', 'ramda', 'gl', 'ecStat', 'mapboxgl'].includes(key)) {
             const fun = new Function("return "+obj[key].trim()+".bind(this)").bind(obj)
             obj[key] = fun();
         }
@@ -103,7 +103,15 @@ function DashECharts(props)  {
     }
 
     if (!ramda.isEmpty(maps)) {
-        const registerMapForEach = (value, key) => echarts.registerMap(key, value);
+        const registerMapForEach = (value, key) => {
+            // eslint-disable-next-line no-prototype-builtins
+            if (value.hasOwnProperty('svg') && typeof value.svg === 'string') {
+                const oParser = new DOMParser();
+                const oDOM = oParser.parseFromString(value.svg, "image/svg+xml");
+                value.svg = oDOM;
+            }
+            echarts.registerMap(key, value);
+        }
         ramda.forEachObjIndexed(registerMapForEach, maps);
     }
 

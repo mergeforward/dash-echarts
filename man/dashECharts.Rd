@@ -14,8 +14,8 @@ dashECharts(id=NULL, bmap_token=NULL, brush_data=NULL, click_data=NULL,
 event=NULL, fun_effects=NULL, fun_keys=NULL, fun_paths=NULL,
 fun_prepares=NULL, fun_values=NULL, funs=NULL,
 mapbox_token=NULL, maps=NULL, n_clicks=NULL,
-n_clicks_timestamp=NULL, option=NULL, selected_data=NULL,
-style=NULL)
+n_clicks_timestamp=NULL, option=NULL, reset_id=NULL,
+resize_id=NULL, selected_data=NULL, style=NULL)
 }
 
 \arguments{
@@ -50,6 +50,10 @@ style=NULL)
 \item{n_clicks_timestamp}{Numeric. }
 
 \item{option}{Named list. }
+
+\item{reset_id}{Numeric. }
+
+\item{resize_id}{Numeric. }
 
 \item{selected_data}{Named list. }
 

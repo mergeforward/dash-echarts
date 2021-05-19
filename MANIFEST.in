@@ -3,7 +3,9 @@ include dash_echarts/dash_echarts.min.js.map
 include dash_echarts/metadata.json
 include dash_echarts/package-info.json
 include dash_echarts/examples/china.json
-include dash_echarts/examples/life-expectancy-table.json
+include dash_echarts/examples/static/life-expectancy-table.json
+include dash_echarts/examples/static/dash_echarts_line.gif
+include dash_echarts/examples/static/responsive-sidebar.css
 include README.md
 include LICENSE
 include package.json

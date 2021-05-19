@@ -1,11 +1,16 @@
 # dash_echarts
 
-## demo
+## gallery
 
+if you install it via `pip install 'dash_echarts[play]'`, 
+you can run the command `echarts_play` to see the gallery demo! 
+
+
+## demo
 
 ![](dash_echarts_stocks.gif)
 
-## quick play
+## try it out
 
 step 1. run command
 
@@ -32,6 +37,7 @@ step 4. explore others
 run other commands
 
 ```
+echarts_play
 echarts_bar
 echarts_heat
 echarts_map
@@ -39,7 +45,9 @@ echarts_scatter3d
 echarts_histbar
 echarts_regression
 echarts_customprofit
-
+echarts_line_race
+echarts_bar_race
+echarts_bar_style
 ```
 
 ![](dash_echarts_bar.gif)
@@ -66,6 +74,9 @@ pip install dash_echarts
 
 ## release notes
 
+- 0.0.12 fix bugs of resizing events, add a gallery demo
+  - this will be the last version before the 0.1.0
+  - the gallery app is now in alpha
 - 0.0.11 fix bugs of echarts' event not updating the dash components, use click_data for receiving event from echarts 
 - 0.0.10 remove dependencies of echarts-for-react, enable mapbox-gl!
   notes: remove deprecated events for versions after 0.0.9

@@ -4,6 +4,28 @@
     "displayName": "DashECharts",
     "methods": [],
     "props": {
+      "resize_id": {
+        "type": {
+          "name": "number"
+        },
+        "required": false,
+        "description": "",
+        "defaultValue": {
+          "value": "0",
+          "computed": false
+        }
+      },
+      "reset_id": {
+        "type": {
+          "name": "number"
+        },
+        "required": false,
+        "description": "",
+        "defaultValue": {
+          "value": "0",
+          "computed": false
+        }
+      },
       "n_clicks": {
         "type": {
           "name": "number"

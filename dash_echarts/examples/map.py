@@ -69,7 +69,7 @@ def main():
 
     # events = ["click"]
     basepath = path.dirname(__file__)
-    filepath = path.abspath(path.join(basepath, 'china.json'))
+    filepath = path.abspath(path.join(basepath+'/static', 'china.json'))
 
 
     with open(filepath) as json_file:
@@ -93,7 +93,7 @@ def main():
 
 
     @app.callback(
-        Output('output', 'ehildren'),
+        Output('output', 'children'),
         [Input('echarts', 'click_data')])
     def update(data):
         if data:

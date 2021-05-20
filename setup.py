@@ -14,7 +14,11 @@ setup(
     version=package["version"],
     author=author,
     author_email=email,
-    packages=[package_name, f'{package_name}.examples'],
+    packages=[package_name,
+              f'{package_name}.examples',
+              f'{package_name}.examples.gallery',
+              f'{package_name}.examples.static',
+              ],
     include_package_data=True,
     license=package['license'],
     description=package.get('description', package_name),
@@ -27,6 +31,7 @@ setup(
     ],    
     entry_points={
         'console_scripts': [
+            'echarts_play=dash_echarts.examples.play:main',
             'echarts_line=dash_echarts.examples.line:main',
             'echarts_bar=dash_echarts.examples.bar:main',
             'echarts_heat=dash_echarts.examples.heat:main',
@@ -36,6 +41,9 @@ setup(
             'echarts_regression=dash_echarts.examples.hist_regression:main',
             'echarts_customprofit=dash_echarts.examples.custom_profit:main',
             'echarts_air=dash_echarts.examples.air:main',
+            'echarts_line_race=dash_echarts.examples.line_race:main',
+            'echarts_bar_race=dash_echarts.examples.bar_race:main',
+            'echarts_bar_style=dash_echarts.examples.bar_style:main',
         ]
     },
 )

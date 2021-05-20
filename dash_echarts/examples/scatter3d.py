@@ -17,7 +17,7 @@ def main():
     '''
     app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
     basepath = path.dirname(__file__)
-    filepath = path.abspath(path.join(basepath, 'life-expectancy-table.json'))
+    filepath = path.abspath(path.join(basepath+'/static', 'life-expectancy-table.json'))
     with open(filepath) as json_file:
         data = json.load(json_file)
 

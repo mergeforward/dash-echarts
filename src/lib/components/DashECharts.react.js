@@ -9,26 +9,9 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import mapboxgl from 'mapbox-gl';
 
 
-const getCircularReplacer = () => {
-  const seen = new WeakSet();
-  return (key, value) => {
-    if (typeof value === "object" && value !== null) {
-      if (seen.has(value)) {
-        return;
-      }
-      seen.add(value);
-    }
-    return value;
-  };
-};
-
-const safeObj = (e) => {
-    return JSON.parse(JSON.stringify(e, getCircularReplacer()));
-}
-
 const loadFuns = (obj) => {
     Object.keys(obj).forEach(key => {
-        if (etupypeof obj[key] === 'string' && !['chart','echarts', 'bmap', 'ramda', 'gl', 'ecStat', 'mapboxgl'].includes(key)) {
+        if (typeof obj[key] === 'string' && !['chart','echarts', 'bmap', 'ramda', 'gl', 'ecStat', 'mapboxgl'].includes(key)) {
             const fun = new Function("return "+obj[key].trim()+".bind(this)").bind(obj)
             obj[key] = fun();
         }
@@ -47,6 +30,8 @@ function DashECharts(props)  {
         maps,
         funs, fun_keys, fun_values, fun_paths, fun_effects, fun_prepares,
         mapbox_token, bmap_token,
+        resize_id,
+        reset_id,
     } = props;
 
 
@@ -103,7 +88,15 @@ function DashECharts(props)  {
     }
 
     if (!ramda.isEmpty(maps)) {
-        const registerMapForEach = (value, key) => echarts.registerMap(key, value);
+        const registerMapForEach = (value, key) => {
+            // eslint-disable-next-line no-prototype-builtins
+            if (value.hasOwnProperty('svg') && typeof value.svg === 'string') {
+                const oParser = new DOMParser();
+                const oDOM = oParser.parseFromString(value.svg, "image/svg+xml");
+                value.svg = oDOM;
+            }
+            echarts.registerMap(key, value);
+        }
         ramda.forEachObjIndexed(registerMapForEach, maps);
     }
 
@@ -191,17 +184,48 @@ function DashECharts(props)  {
         }
     }, []);
 
-    window.onresize = function() {
-        if (!ramda.isEmpty(chart)) {
-            chart.resize();
-        }
-    };
 
     useEffect(() => {
         if (!ramda.isEmpty(chart)) {
             chart.setOption(option)
+            const resizeFunc = () => {
+                if (!ramda.isEmpty(chart)) {
+                    chart.resize();
+                    const ts = Date.now()
+                    setProps({
+                        n_resizes: ts,
+                        n_clicks_timestamp: ts,
+                    });
+                }
+            }
+            window.addEventListener('resize', resizeFunc);
+            return () => {
+              window.removeEventListener('resize', resizeFunc)
+            }
+        }
+        return () => {
         }
     }, [option, chart])
+
+    useEffect(() => {
+        if (!ramda.isEmpty(chart)) {
+            if (resize_id>0) {
+                setTimeout(function () {
+                    chart.resize()
+                    // eslint-disable-next-line no-magic-numbers
+                }, 500)
+            }
+        }
+    }, [resize_id])
+
+    useEffect(() => {
+        if (!ramda.isEmpty(chart)) {
+            if (reset_id>0) {
+                chart.clear()
+                chart.setOption(option)
+            }
+        }
+    }, [reset_id])
 
     return (
         <div id={id} style={style} ref={chartRef}/>
@@ -209,6 +233,8 @@ function DashECharts(props)  {
 }
 
 DashECharts.defaultProps = {
+    resize_id: 0,
+    reset_id: 0,
     n_clicks: 0,
     n_clicks_timestamp: -1,
     click_data: {},
@@ -228,6 +254,8 @@ DashECharts.defaultProps = {
 };
 
 DashECharts.propTypes = {
+    resize_id: PropTypes.number,
+    reset_id: PropTypes.number,
     n_clicks: PropTypes.number,
     n_clicks_timestamp: PropTypes.number,
     click_data: PropTypes.object,

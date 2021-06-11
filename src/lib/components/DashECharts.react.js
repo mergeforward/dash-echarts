@@ -1,4 +1,4 @@
-import React, {useLayoutEffect, useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
 import * as gl from 'echarts-gl';
 import * as echarts from 'echarts';
@@ -37,9 +37,9 @@ function DashECharts(props)  {
 
     // eslint-disable-next-line no-unused-vars
     const [chart, setChart] = useState({});
+    const chartRef = useRef(null)
 
-
-    const funConvertKeys = (obj) => {
+    const funConvertKeys = useCallback((obj) => {
         if (obj !== null) {
             Object.keys(obj).forEach(key => {
                 const v = obj[key]
@@ -53,9 +53,9 @@ function DashECharts(props)  {
                 }
             })
         }
-    }
+    })
 
-    const funConvertValues = (obj) => {
+    const funConvertValues = useCallback((obj) => {
         if (obj !== null) {
             Object.keys(obj).forEach(key => {
                 const v = obj[key]
@@ -71,63 +71,74 @@ function DashECharts(props)  {
                 } 
             })
         }
-    }
+    })
 
-    const funConvertPaths = (obj) => {
+    const funConvertPaths = useCallback((obj) => {
         if (obj !== null) {
             for (const key of fun_paths) {
                 ramda.assocPath(fun_paths[key], funs[key], obj)
             }
         }
-    }
+    })
 
-    const funPreparesRun = (obj) => {
+    const funPreparesRun = useCallback((obj) => {
         for (const key of fun_prepares) {
             funs[key](obj)
         }
-    }
+    })
 
-    if (!ramda.isEmpty(maps)) {
-        const registerMapForEach = (value, key) => {
-            // eslint-disable-next-line no-prototype-builtins
-            if (value.hasOwnProperty('svg') && typeof value.svg === 'string') {
-                const oParser = new DOMParser();
-                const oDOM = oParser.parseFromString(value.svg, "image/svg+xml");
-                value.svg = oDOM;
-            }
-            echarts.registerMap(key, value);
+    const registerMapForEach = useCallback((value, key) => {
+        // eslint-disable-next-line no-prototype-builtins
+        if (value.hasOwnProperty('svg') && typeof value.svg === 'string') {
+            const oParser = new DOMParser();
+            const oDOM = oParser.parseFromString(value.svg, "image/svg+xml");
+            value.svg = oDOM;
         }
-        ramda.forEachObjIndexed(registerMapForEach, maps);
-    }
+        echarts.registerMap(key, value);
+    })
 
-    if (!ramda.isEmpty(mapbox_token)) {
-        funs.mapboxgl = mapboxgl;
-        mapboxgl.accessToken = mapbox_token;
-        window.mapboxgl = mapboxgl;
-    }
-
-    if (!ramda.isEmpty(bmap_token)) {
-        funs.bmap = bmap;
-    }
-
-    const chartRef = useRef(null)
-
-    funs.echarts = echarts;
-    funs.ramda = ramda;
-    funs.gl = gl;
-    funs.ecStat = ecStat;
-    loadFuns(funs)
-    if (!ramda.isEmpty(fun_prepares)) {funPreparesRun(option)}
-    if (!ramda.isEmpty(fun_keys)) {funConvertKeys(option)}
-    if (!ramda.isEmpty(fun_values)) {funConvertValues(option)}
-    if (!ramda.isEmpty(fun_paths)) {funConvertPaths(option)}
-
-    echarts.registerTransform(ecStat.transform.regression);
-    echarts.registerTransform(ecStat.transform.histogram);
-    echarts.registerTransform(ecStat.transform.clustering);
 
     useEffect(() => {
+        if (!ramda.isEmpty(maps)) {
+            ramda.forEachObjIndexed(registerMapForEach, maps);
+        }
+
+        if (!ramda.isEmpty(mapbox_token)) {
+            funs.mapboxgl = mapboxgl;
+            mapboxgl.accessToken = mapbox_token;
+            window.mapboxgl = mapboxgl;
+        }
+
+        if (!ramda.isEmpty(bmap_token)) {
+            funs.bmap = bmap;
+        }
+
+
+        funs.echarts = echarts;
+        funs.ramda = ramda;
+        funs.gl = gl;
+        funs.ecStat = ecStat;
+        loadFuns(funs)
+        if (!ramda.isEmpty(fun_prepares)) {funPreparesRun(option)}
+        if (!ramda.isEmpty(fun_keys)) {funConvertKeys(option)}
+        if (!ramda.isEmpty(fun_values)) {funConvertValues(option)}
+        if (!ramda.isEmpty(fun_paths)) {funConvertPaths(option)}
+        if (!ramda.isEmpty(fun_effects)) {
+            fun_effects.forEach(e => {
+                if (typeof e === 'string') {
+                    funs[e]()
+                } else {
+                    funs[e.name](e.option)
+                }
+            })
+        }
+
+        echarts.registerTransform(ecStat.transform.regression);
+        echarts.registerTransform(ecStat.transform.histogram);
+        echarts.registerTransform(ecStat.transform.clustering);
+
         const myChart = echarts.init(chartRef.current)
+        myChart.setOption(option)
         setChart(myChart)
 
         funs.chart = myChart;
@@ -173,15 +184,6 @@ function DashECharts(props)  {
             });
         })
 
-        if (!ramda.isEmpty(fun_effects)) {
-            fun_effects.forEach(e => {
-                if (typeof e === 'string') {
-                    funs[e]()
-                } else {
-                    funs[e.name](e.option)
-                }
-            })
-        }
     }, []);
 
 
@@ -205,14 +207,13 @@ function DashECharts(props)  {
         }
         return () => {
         }
-    }, [option, chart])
+    }, [option])
 
     useEffect(() => {
         if (!ramda.isEmpty(chart)) {
             if (resize_id>0) {
                 setTimeout(function () {
                     chart.resize()
-                    // eslint-disable-next-line no-magic-numbers
                 }, 500)
             }
         }

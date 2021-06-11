@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import dash_echarts
 import dash, random
 from dash.dependencies import Input, Output
@@ -421,7 +423,7 @@ def main():
     author: dameng <pingf0@gmail.com>
     '''
     external_scripts = [
-        f'http://api.map.baidu.com/api?v=3.0&ak={sys.argv[1]})',
+        f'http://api.map.baidu.com/getscript?v=3.0&ak={sys.argv[1]}&t={datetime.now().strftime("%Y%m%d%H%M%S")})',
     ]
     app = dash.Dash(__name__,
         external_scripts=external_scripts

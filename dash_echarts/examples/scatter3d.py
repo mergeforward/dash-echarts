@@ -106,7 +106,7 @@ def main():
         style={
             'position': 'absolute', 
             'height': 300, 'width': 300, 
-            'top': 150, 'left': 150
+            'top': '20vh', 'left': '10vw'
         }
     )
 
@@ -118,8 +118,10 @@ def main():
                         option = option,
                         id='echarts',
                         style={
+                            'position': 'absolute',
                             "width": '100vw',
                             "height": '80vh',
+                            "left": '10vw'
                         }
                     ),
                 ]

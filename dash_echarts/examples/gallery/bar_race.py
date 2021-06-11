@@ -184,7 +184,7 @@ layout = html.Div([
                style={
                    'position': 'absolute',
                    'height': 50, 'width': '10%',
-                   'top': '75%', 'right': '12%',
+                   'top': '75%', 'left': '75%',
                    'opacity': 0.8
                }
    ),
@@ -355,7 +355,7 @@ layout = html.Div([
                    style={
                        'position': 'absolute',
                        'height': 50, 'width': '10%',
-                       'top': '75%', 'right': '12%',
+                       'top': '75%', 'left': '75%',
                        'opacity': 0.8
                    }
        ),

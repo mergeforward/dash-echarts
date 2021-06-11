@@ -97,45 +97,45 @@ function DashECharts(props)  {
         echarts.registerMap(key, value);
     })
 
+    if (!ramda.isEmpty(maps)) {
+        ramda.forEachObjIndexed(registerMapForEach, maps);
+    }
+
+    if (!ramda.isEmpty(mapbox_token)) {
+        funs.mapboxgl = mapboxgl;
+        mapboxgl.accessToken = mapbox_token;
+        window.mapboxgl = mapboxgl;
+    }
+
+    if (!ramda.isEmpty(bmap_token)) {
+        funs.bmap = bmap;
+    }
+
+
+    funs.echarts = echarts;
+    funs.ramda = ramda;
+    funs.gl = gl;
+    funs.ecStat = ecStat;
+    loadFuns(funs)
+    if (!ramda.isEmpty(fun_prepares)) {funPreparesRun(option)}
+    if (!ramda.isEmpty(fun_keys)) {funConvertKeys(option)}
+    if (!ramda.isEmpty(fun_values)) {funConvertValues(option)}
+    if (!ramda.isEmpty(fun_paths)) {funConvertPaths(option)}
+    if (!ramda.isEmpty(fun_effects)) {
+        fun_effects.forEach(e => {
+            if (typeof e === 'string') {
+                funs[e]()
+            } else {
+                funs[e.name](e.option)
+            }
+        })
+    }
+
+    echarts.registerTransform(ecStat.transform.regression);
+    echarts.registerTransform(ecStat.transform.histogram);
+    echarts.registerTransform(ecStat.transform.clustering);
 
     useEffect(() => {
-        if (!ramda.isEmpty(maps)) {
-            ramda.forEachObjIndexed(registerMapForEach, maps);
-        }
-
-        if (!ramda.isEmpty(mapbox_token)) {
-            funs.mapboxgl = mapboxgl;
-            mapboxgl.accessToken = mapbox_token;
-            window.mapboxgl = mapboxgl;
-        }
-
-        if (!ramda.isEmpty(bmap_token)) {
-            funs.bmap = bmap;
-        }
-
-
-        funs.echarts = echarts;
-        funs.ramda = ramda;
-        funs.gl = gl;
-        funs.ecStat = ecStat;
-        loadFuns(funs)
-        if (!ramda.isEmpty(fun_prepares)) {funPreparesRun(option)}
-        if (!ramda.isEmpty(fun_keys)) {funConvertKeys(option)}
-        if (!ramda.isEmpty(fun_values)) {funConvertValues(option)}
-        if (!ramda.isEmpty(fun_paths)) {funConvertPaths(option)}
-        if (!ramda.isEmpty(fun_effects)) {
-            fun_effects.forEach(e => {
-                if (typeof e === 'string') {
-                    funs[e]()
-                } else {
-                    funs[e.name](e.option)
-                }
-            })
-        }
-
-        echarts.registerTransform(ecStat.transform.regression);
-        echarts.registerTransform(ecStat.transform.histogram);
-        echarts.registerTransform(ecStat.transform.clustering);
 
         const myChart = echarts.init(chartRef.current)
         myChart.setOption(option)

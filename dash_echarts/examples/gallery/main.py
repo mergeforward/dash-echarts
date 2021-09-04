@@ -33,6 +33,8 @@ layout = html.Div([
         import dash_core_components as dcc
         from dash.exceptions import PreventUpdate
 
+        def gen_randlist(num):
+            return random.sample(range(num), 7)
 
         def main():
             app = dash.Dash(__name__)

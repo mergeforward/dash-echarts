@@ -1,6 +1,6 @@
 {
   "name": "dash_echarts",
-  "version": "0.0.12.2",
+  "version": "0.0.12.3",
   "description": "echarts for dash",
   "repository": {
     "type": "git",
@@ -24,11 +24,11 @@
   "author": "dameng <pingf0@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "echarts": "^5.1.1",
-    "echarts-gl": "^2.0.4",
+    "echarts": "^5.2.0",
+    "echarts-gl": "^2.0.8",
     "echarts-stat": "^1.2.0",
-    "mapbox-gl": "1.0",
-    "ramda": "^0.26.1"
+    "mapbox-gl": "2.4.1",
+    "ramda": "^0.27.1"
   },
   "devDependencies": {
     "@babel/core": "^7.5.4",

@@ -58,7 +58,7 @@ def main():
             'feature': {
                 'mark': {'show': True},
                 'dataView': {'show': True, 'readOnly': False},
-                'magicType': {'show': True, 'type': ['bar', 'stack', 'tiled']},
+                'magicType': {'show': True, 'type': ['line', 'bar', 'stack', 'tiled']},
                 'restore': {'show': True},
                 'saveAsImage': {'show': True}
             }

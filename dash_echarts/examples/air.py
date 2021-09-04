@@ -1,12 +1,7 @@
-from datetime import datetime
-
-import dash_echarts
-import dash, random
-from dash.dependencies import Input, Output
 import dash_html_components as html
-import dash_core_components as dcc
-from dash.exceptions import PreventUpdate
-import sys
+import dash_echarts
+from datetime import datetime
+import dash, sys
 
 data = [
     {"name": "海门", "value": 9},
@@ -411,7 +406,6 @@ def convert(data):
 def top(data, num=5):
     return sorted(data, key=lambda k: k['value'][2], reverse=True)[:num]
     
-
 points = convert(data)
 top10 = top(points, 10)
 
@@ -442,108 +436,10 @@ def main():
         },
         
         "bmap": {
-            "center": [104.114129, 37.550339],
+            "center": [113.65, 34.76],
             "zoom": 5,
             "roam": True,
-            "mapStyle": {
-                "styleJson": [{
-                    'featureType': 'water',
-                    'elementType': 'all',
-                    'stylers': {
-                        'color': '#d1d1d1'
-                    }
-                }, {
-                    'featureType': 'land',
-                    'elementType': 'all',
-                    'stylers': {
-                        'color': '#f3f3f3'
-                    }
-                }, {
-                    'featureType': 'railway',
-                    'elementType': 'all',
-                    'stylers': {
-                        'visibility': 'off'
-                    }
-                }, {
-                    'featureType': 'highway',
-                    'elementType': 'all',
-                    'stylers': {
-                        'color': '#fdfdfd'
-                    }
-                }, {
-                    'featureType': 'highway',
-                    'elementType': 'labels',
-                    'stylers': {
-                        'visibility': 'off'
-                    }
-                }, {
-                    'featureType': 'arterial',
-                    'elementType': 'geometry',
-                    'stylers': {
-                        'color': '#fefefe'
-                    }
-                }, {
-                    'featureType': 'arterial',
-                    'elementType': 'geometry.fill',
-                    'stylers': {
-                        'color': '#fefefe'
-                    }
-                }, {
-                    'featureType': 'poi',
-                    'elementType': 'all',
-                    'stylers': {
-                        'visibility': 'off'
-                    }
-                }, {
-                    'featureType': 'green',
-                    'elementType': 'all',
-                    'stylers': {
-                        'visibility': 'off'
-                    }
-                }, {
-                    'featureType': 'subway',
-                    'elementType': 'all',
-                    'stylers': {
-                        'visibility': 'off'
-                    }
-                }, {
-                    'featureType': 'manmade',
-                    'elementType': 'all',
-                    'stylers': {
-                        'color': '#d1d1d1'
-                    }
-                }, {
-                    'featureType': 'local',
-                    'elementType': 'all',
-                    'stylers': {
-                        'color': '#d1d1d1'
-                    }
-                }, {
-                    'featureType': 'arterial',
-                    'elementType': 'labels',
-                    'stylers': {
-                        'visibility': 'off'
-                    }
-                }, {
-                    'featureType': 'boundary',
-                    'elementType': 'all',
-                    'stylers': {
-                        'color': '#fefefe'
-                    }
-                }, {
-                    'featureType': 'building',
-                    'elementType': 'all',
-                    'stylers': {
-                        'color': '#d1d1d1'
-                    }
-                }, {
-                    'featureType': 'label',
-                    'elementType': 'labels.text.fill',
-                    'stylers': {
-                        'color': '#999999'
-                    }
-                }]
-            }
+            "mapStyle": "grass"
         },
         "series" : [
             {
@@ -551,7 +447,7 @@ def main():
                 'type': 'scatter',
                 'coordinateSystem': 'bmap',
                 'data': points,
-                'symbolSize': 'ss',
+                'symbolSize': 'div10',
                 'encode': {
                     'value': 2
                 },
@@ -571,7 +467,7 @@ def main():
                 'type': 'effectScatter',
                 'coordinateSystem': 'bmap',
                 'data': top10,
-                'symbolSize': 'ss' ,
+                'symbolSize': 'div10' ,
                 'encode': {
                     'value': 2
                 },
@@ -600,15 +496,13 @@ def main():
             option = option,
             id='echarts',
             funs= {
-                'ss': '''
+                'div10': '''
                 function(val) {
                     return val[2] / 10;
                 }
                 '''
             },
-            fun_values= ["ss"],
-            # fun_keys= ["symbolSize"],
-
+            fun_values= ["div10"],
 
             style={
                 "width": '100vw',

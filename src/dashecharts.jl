@@ -3,9 +3,9 @@ module DashEcharts
 using Dash
 
 const resources_path = realpath(joinpath( @__DIR__, "..", "deps"))
-const version = "0.0.12.2"
+const version = "0.0.12.5"
 
-include("dashecharts.jl")
+include("jl/dashecharts.jl")
 
 function __init__()
     DashBase.register_package(
@@ -16,14 +16,14 @@ function __init__()
             [
                 DashBase.Resource(
     relative_package_path = "dash_echarts.min.js",
-    external_url = "https://unpkg.com/dash_echarts@0.0.12.2/dash_echarts/dash_echarts.min.js",
+    external_url = "https://unpkg.com/dash_echarts@0.0.12.5/dash_echarts/dash_echarts.min.js",
     dynamic = nothing,
     async = nothing,
     type = :js
 ),
 DashBase.Resource(
     relative_package_path = "dash_echarts.min.js.map",
-    external_url = "https://unpkg.com/dash_echarts@0.0.12.2/dash_echarts/dash_echarts.min.js.map",
+    external_url = "https://unpkg.com/dash_echarts@0.0.12.5/dash_echarts/dash_echarts.min.js.map",
     dynamic = true,
     async = nothing,
     type = :js

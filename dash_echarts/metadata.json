@@ -81,6 +81,17 @@
           "computed": false
         }
       },
+      "axis_data": {
+        "type": {
+          "name": "object"
+        },
+        "required": false,
+        "description": "",
+        "defaultValue": {
+          "value": "{}",
+          "computed": false
+        }
+      },
       "style": {
         "type": {
           "name": "object"
@@ -165,7 +176,7 @@
           "computed": false
         }
       },
-      "fun_effects": {
+      "fun_befores": {
         "type": {
           "name": "array"
         },
@@ -176,7 +187,18 @@
           "computed": false
         }
       },
-      "fun_prepares": {
+      "fun_afters": {
+        "type": {
+          "name": "array"
+        },
+        "required": false,
+        "description": "",
+        "defaultValue": {
+          "value": "[]",
+          "computed": false
+        }
+      },
+      "fun_loaded": {
         "type": {
           "name": "array"
         },
@@ -199,6 +221,17 @@
         }
       },
       "bmap_token": {
+        "type": {
+          "name": "string"
+        },
+        "required": false,
+        "description": "",
+        "defaultValue": {
+          "value": "null",
+          "computed": false
+        }
+      },
+      "amap_token": {
         "type": {
           "name": "string"
         },

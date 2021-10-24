@@ -2,7 +2,7 @@
 name = "DashEcharts"
 uuid = "1b08a953-4be3-4667-9a23-042ff7d49322"
 authors = ["dameng <pingf0@gmail.com>"]
-version = "0.0.12.5"
+version = "0.0.12.7"
 
 [deps]
 Dash = "1b08a953-4be3-4667-9a23-3db579824955"

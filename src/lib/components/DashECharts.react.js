@@ -5,18 +5,19 @@ import * as echarts from 'echarts';
 import * as ramda from 'ramda';
 import * as ecStat from 'echarts-stat';
 import bmap from 'echarts/extension/bmap/bmap';
-import 'mapbox-gl/dist/mapbox-gl.css';
+// import 'mapbox-gl/dist/mapbox-gl.css';
 import mapboxgl from 'mapbox-gl';
+import * as amap from 'echarts-extension-amap';
 
-
-const loadFuns = (obj) => {
-    Object.keys(obj).forEach(key => {
-        if (typeof obj[key] === 'string' && !['chart','echarts', 'bmap', 'ramda', 'gl', 'ecStat', 'mapboxgl'].includes(key)) {
-            const fun = new Function("return "+obj[key].trim()+".bind(this)").bind(obj)
-            obj[key] = fun();
+const loadFuns = (funs, obj) => {
+    Object.keys(funs).forEach(key => {
+        if (typeof funs[key] === 'string') {
+            const fun = new Function("return "+funs[key].trim()+".bind(this)").bind(obj)
+            funs[key] = fun();
         }
     })
 }
+
 
 function DashECharts(props)  {
     const {
@@ -24,21 +25,25 @@ function DashECharts(props)  {
         n_clicks, n_clicks_timestamp, click_data,
         selected_data,
         brush_data,
+        axis_data,
         event,
         option,
         style, id, setProps,
         maps,
-        funs, fun_keys, fun_values, fun_paths, fun_effects, fun_prepares,
-        mapbox_token, bmap_token,
+        funs, fun_keys, fun_values, fun_paths,
+        fun_befores, fun_afters, fun_loaded,
+        mapbox_token, bmap_token, amap_token,
         resize_id,
         reset_id,
     } = props;
 
+    const g = {};
 
     // eslint-disable-next-line no-unused-vars
     const [chart, setChart] = useState({});
     const chartRef = useRef(null)
 
+    //obj is the option
     const funConvertKeys = useCallback((obj) => {
         if (obj !== null) {
             Object.keys(obj).forEach(key => {
@@ -81,11 +86,29 @@ function DashECharts(props)  {
         }
     })
 
-    const funPreparesRun = useCallback((obj) => {
-        for (const key of fun_prepares) {
-            funs[key](obj)
+    const funRun = useCallback((fun_names, funs) => {
+        for (const key of fun_names) {
+            funs[key]()
         }
     })
+    // const funAftersRun = useCallback((obj) => {
+    //     for (const key of fun_afters) {
+    //         if (typeof key === 'string') {
+    //             funs[key]()
+    //         } else {
+    //             funs[key](obj)
+    //         }
+    //     }
+    // })
+    // const funLoadedRun = useCallback((obj) => {
+    //     for (const key of fun_loaded) {
+    //         if (typeof key === 'string') {
+    //             funs[key]()
+    //         } else {
+    //             funs[key](obj)
+    //         }
+    //     }
+    // })
 
     const registerMapForEach = useCallback((value, key) => {
         // eslint-disable-next-line no-prototype-builtins
@@ -102,34 +125,30 @@ function DashECharts(props)  {
     }
 
     if (!ramda.isEmpty(mapbox_token)) {
-        funs.mapboxgl = mapboxgl;
+        g.mapboxgl = mapboxgl;
+        // funs.mapboxgl = mapboxgl;
         mapboxgl.accessToken = mapbox_token;
         window.mapboxgl = mapboxgl;
     }
 
     if (!ramda.isEmpty(bmap_token)) {
-        funs.bmap = bmap;
+        g.bmap = bmap;
     }
 
+    if (!ramda.isEmpty(amap_token)) {
+        g.amap = amap;
+    }
 
-    funs.echarts = echarts;
-    funs.ramda = ramda;
-    funs.gl = gl;
-    funs.ecStat = ecStat;
-    loadFuns(funs)
-    if (!ramda.isEmpty(fun_prepares)) {funPreparesRun(option)}
+    g.echarts = echarts;
+    g.ramda = ramda;
+    g.gl = gl;
+    g.ecStat = ecStat;
+    loadFuns(funs, g)
+    if (!ramda.isEmpty(fun_befores)) {funRun(fun_befores, funs)}
     if (!ramda.isEmpty(fun_keys)) {funConvertKeys(option)}
     if (!ramda.isEmpty(fun_values)) {funConvertValues(option)}
     if (!ramda.isEmpty(fun_paths)) {funConvertPaths(option)}
-    if (!ramda.isEmpty(fun_effects)) {
-        fun_effects.forEach(e => {
-            if (typeof e === 'string') {
-                funs[e]()
-            } else {
-                funs[e.name](e.option)
-            }
-        })
-    }
+    if (!ramda.isEmpty(fun_afters)) {funRun(fun_afters, funs)}
 
     echarts.registerTransform(ecStat.transform.regression);
     echarts.registerTransform(ecStat.transform.histogram);
@@ -141,7 +160,7 @@ function DashECharts(props)  {
         myChart.setOption(option)
         setChart(myChart)
 
-        funs.chart = myChart;
+        g.chart = myChart;
         myChart.on("click", e => {
             const ts = Date.now()
             const clickCount = n_clicks + 1
@@ -183,8 +202,21 @@ function DashECharts(props)  {
                 brush_data: data
             });
         })
-
-    }, []);
+        myChart.on("updateAxisPointer", e => {
+            const ts = Date.now()
+            const data = ramda.pick([
+                'axisInfo',
+                'dataIndex','dataIndexInside', 'seriesIndex',
+                'type'
+            ], e)
+            data.core_timestamp = ts;
+            setProps({
+                axis_data: data
+            });
+        })
+        funRun(fun_loaded, funs)
+    // }, []);
+    }, [option]);
 
 
     useEffect(() => {
@@ -229,7 +261,9 @@ function DashECharts(props)  {
     }, [reset_id])
 
     return (
-        <div id={id} style={style} ref={chartRef}/>
+        <div>
+            <div id={id} style={style} ref={chartRef}/>
+        </div>
     );
 }
 
@@ -241,17 +275,20 @@ DashECharts.defaultProps = {
     click_data: {},
     selected_data: {},
     brush_data: {},
+    axis_data: {},
     style: {},
     option: {},
     maps: {},
     fun_keys: [],
     fun_values: [],
     fun_paths: {},
-    fun_effects: [],
-    fun_prepares: [],
+    fun_befores: [],
+    fun_afters: [],
+    fun_loaded: [],
     funs: {},
     mapbox_token: null,
     bmap_token: null,
+    amap_token: null,
 };
 
 DashECharts.propTypes = {
@@ -262,6 +299,7 @@ DashECharts.propTypes = {
     click_data: PropTypes.object,
     selected_data: PropTypes.object,
     brush_data: PropTypes.object,
+    axis_data: PropTypes.object,
     style: PropTypes.object,
     event: PropTypes.object,
     option: PropTypes.object,
@@ -270,10 +308,12 @@ DashECharts.propTypes = {
     fun_keys: PropTypes.array,
     fun_values: PropTypes.array,
     fun_paths: PropTypes.object,
-    fun_effects: PropTypes.array,
-    fun_prepares: PropTypes.array,
+    fun_befores: PropTypes.array,
+    fun_afters: PropTypes.array,
+    fun_loaded: PropTypes.array,
     mapbox_token: PropTypes.string,
     bmap_token: PropTypes.string,
+    amap_token: PropTypes.string,
     /**
      * The ID used to identify this component in Dash callbacks.
      */

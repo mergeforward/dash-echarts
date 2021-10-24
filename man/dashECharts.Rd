@@ -10,9 +10,10 @@
 }
 
 \usage{
-dashECharts(id=NULL, bmap_token=NULL, brush_data=NULL, click_data=NULL,
-event=NULL, fun_effects=NULL, fun_keys=NULL, fun_paths=NULL,
-fun_prepares=NULL, fun_values=NULL, funs=NULL,
+dashECharts(id=NULL, amap_token=NULL, axis_data=NULL, bmap_token=NULL,
+brush_data=NULL, click_data=NULL, event=NULL,
+fun_afters=NULL, fun_befores=NULL, fun_keys=NULL,
+fun_loaded=NULL, fun_paths=NULL, fun_values=NULL, funs=NULL,
 mapbox_token=NULL, maps=NULL, n_clicks=NULL,
 n_clicks_timestamp=NULL, option=NULL, reset_id=NULL,
 resize_id=NULL, selected_data=NULL, style=NULL)
@@ -20,6 +21,10 @@ resize_id=NULL, selected_data=NULL, style=NULL)
 
 \arguments{
 \item{id}{Character. The ID used to identify this component in Dash callbacks.}
+
+\item{amap_token}{Character. }
+
+\item{axis_data}{Named list. }
 
 \item{bmap_token}{Character. }
 
@@ -29,13 +34,15 @@ resize_id=NULL, selected_data=NULL, style=NULL)
 
 \item{event}{Named list. }
 
-\item{fun_effects}{Unnamed list. }
+\item{fun_afters}{Unnamed list. }
+
+\item{fun_befores}{Unnamed list. }
 
 \item{fun_keys}{Unnamed list. }
 
-\item{fun_paths}{Named list. }
+\item{fun_loaded}{Unnamed list. }
 
-\item{fun_prepares}{Unnamed list. }
+\item{fun_paths}{Named list. }
 
 \item{fun_values}{Unnamed list. }
 

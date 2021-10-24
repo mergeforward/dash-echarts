@@ -36,6 +36,8 @@ module.exports = (env, argv) => {
 
     const externals = ('externals' in overrides) ? overrides.externals : ({
         react: 'React',
+        'BMap': 'BMap',
+        'AMap': 'AMap',
         'react-dom': 'ReactDOM',
         'plotly.js': 'Plotly',
         'prop-types': 'PropTypes',

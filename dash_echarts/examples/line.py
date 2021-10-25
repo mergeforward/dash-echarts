@@ -59,7 +59,7 @@ app.layout = html.Div([
 
 @app.callback(
     Output('echarts', 'option'),
-    [Input('echarts', 'axis_data')],
+    [Input('echarts', 'axis_pointer_data')],
     [State('echarts', 'option')],
 )
 def update(axis, opt):

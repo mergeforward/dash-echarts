@@ -81,7 +81,7 @@
           "computed": false
         }
       },
-      "axis_data": {
+      "axis_pointer_data": {
         "type": {
           "name": "object"
         },

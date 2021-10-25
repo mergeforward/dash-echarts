@@ -25,7 +25,7 @@ function DashECharts(props)  {
         n_clicks, n_clicks_timestamp, click_data,
         selected_data,
         brush_data,
-        axis_data,
+        axis_pointer_data,
         event,
         option,
         style, id, setProps,
@@ -211,7 +211,7 @@ function DashECharts(props)  {
             ], e)
             data.core_timestamp = ts;
             setProps({
-                axis_data: data
+                axis_pointer_data: data
             });
         })
         funRun(fun_loaded, funs)
@@ -275,7 +275,7 @@ DashECharts.defaultProps = {
     click_data: {},
     selected_data: {},
     brush_data: {},
-    axis_data: {},
+    axis_pointer_data: {},
     style: {},
     option: {},
     maps: {},
@@ -299,7 +299,7 @@ DashECharts.propTypes = {
     click_data: PropTypes.object,
     selected_data: PropTypes.object,
     brush_data: PropTypes.object,
-    axis_data: PropTypes.object,
+    axis_pointer_data: PropTypes.object,
     style: PropTypes.object,
     event: PropTypes.object,
     option: PropTypes.object,

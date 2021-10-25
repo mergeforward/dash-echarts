@@ -10,7 +10,7 @@ A DashECharts component.
 Keyword arguments:
 - `id` (String; optional): The ID used to identify this component in Dash callbacks.
 - `amap_token` (String; optional)
-- `axis_data` (Dict; optional)
+- `axis_pointer_data` (Dict; optional)
 - `bmap_token` (String; optional)
 - `brush_data` (Dict; optional)
 - `click_data` (Dict; optional)
@@ -33,7 +33,7 @@ Keyword arguments:
 - `style` (Dict; optional)
 """
 function dashecharts(; kwargs...)
-        available_props = Symbol[:id, :amap_token, :axis_data, :bmap_token, :brush_data, :click_data, :event, :fun_afters, :fun_befores, :fun_keys, :fun_loaded, :fun_paths, :fun_values, :funs, :mapbox_token, :maps, :n_clicks, :n_clicks_timestamp, :option, :reset_id, :resize_id, :selected_data, :style]
+        available_props = Symbol[:id, :amap_token, :axis_pointer_data, :bmap_token, :brush_data, :click_data, :event, :fun_afters, :fun_befores, :fun_keys, :fun_loaded, :fun_paths, :fun_values, :funs, :mapbox_token, :maps, :n_clicks, :n_clicks_timestamp, :option, :reset_id, :resize_id, :selected_data, :style]
         wild_props = Symbol[]
         return Component("dashecharts", "DashECharts", "dash_echarts", available_props, wild_props; kwargs...)
 end

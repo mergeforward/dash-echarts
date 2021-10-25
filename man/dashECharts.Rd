@@ -10,13 +10,14 @@
 }
 
 \usage{
-dashECharts(id=NULL, amap_token=NULL, axis_data=NULL, bmap_token=NULL,
-brush_data=NULL, click_data=NULL, event=NULL,
-fun_afters=NULL, fun_befores=NULL, fun_keys=NULL,
-fun_loaded=NULL, fun_paths=NULL, fun_values=NULL, funs=NULL,
-mapbox_token=NULL, maps=NULL, n_clicks=NULL,
-n_clicks_timestamp=NULL, option=NULL, reset_id=NULL,
-resize_id=NULL, selected_data=NULL, style=NULL)
+dashECharts(id=NULL, amap_token=NULL, axis_pointer_data=NULL,
+bmap_token=NULL, brush_data=NULL, click_data=NULL,
+event=NULL, fun_afters=NULL, fun_befores=NULL,
+fun_keys=NULL, fun_loaded=NULL, fun_paths=NULL,
+fun_values=NULL, funs=NULL, mapbox_token=NULL, maps=NULL,
+n_clicks=NULL, n_clicks_timestamp=NULL, option=NULL,
+reset_id=NULL, resize_id=NULL, selected_data=NULL,
+style=NULL)
 }
 
 \arguments{
@@ -24,7 +25,7 @@ resize_id=NULL, selected_data=NULL, style=NULL)
 
 \item{amap_token}{Character. }
 
-\item{axis_data}{Named list. }
+\item{axis_pointer_data}{Named list. }
 
 \item{bmap_token}{Character. }
 

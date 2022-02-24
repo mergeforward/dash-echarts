@@ -254,7 +254,7 @@
           "name": "func"
         },
         "required": false,
-        "description": "Dash-assigned callback that should be called to report property changes\nto Dash, to make them available for callbacks."
+        "description": "Dash-assigned callback that should be called to report property changes\r\nto Dash, to make them available for callbacks."
       }
     }
   }

@@ -1,6 +1,6 @@
 {
   "name": "dash_echarts",
-  "version": "0.0.12.8",
+  "version": "0.0.12.10",
   "description": "echarts for dash",
   "repository": {
     "type": "git",
@@ -27,6 +27,7 @@
     "echarts": "^5.2.1",
     "echarts-extension-amap": "^1.10.1",
     "echarts-gl": "^2.0.8",
+    "echarts-liquidfill": "^3.1.0",
     "echarts-stat": "^1.2.0",
     "mapbox-gl": "1.13.2",
     "ramda": "^0.27.1",
@@ -59,5 +60,9 @@
   "engines": {
     "node": ">=8.11.0",
     "npm": ">=6.1.0"
+  },
+  "directories": {
+    "man": "man",
+    "test": "tests"
   }
 }

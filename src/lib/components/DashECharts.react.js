@@ -2,6 +2,7 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
 import * as gl from 'echarts-gl';
 import * as echarts from 'echarts';
+import 'echarts-liquidfill'
 import * as ramda from 'ramda';
 import * as ecStat from 'echarts-stat';
 import bmap from 'echarts/extension/bmap/bmap';
